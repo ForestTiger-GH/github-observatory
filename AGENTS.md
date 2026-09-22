@@ -1,26 +1,42 @@
 # AGENTS.md
 
-## Purpose
+## 1. If the task is to inspect the repositories
 
-This repository is a compact observatory for GitHub-reported metadata and activity of repositories owned by `ForestTiger-GH`.
+Start at `profiles/README.md`.
 
-## Non-negotiable constraints
+That route is for questions such as:
 
-1. Do not ingest repository contents into the observatory.
-2. Do not persist commit messages, authors, emails, file names, directory trees, diffs, patches, issue/PR bodies, workflow logs, artifacts, secrets, or security findings.
-3. Keep public and private repositories discoverable by name and high-level metrics only.
-4. Store observations, not analytical conclusions. Do not add moving averages, rates, ratios, rankings, scores, trend labels, or other derived analytics to the collection layer.
-5. Preserve `unknown != zero`. Do not replace unavailable GitHub values with zero.
-6. Repository discovery must remain automatic. Do not introduce a manually maintained allow-list for normal operation.
-7. The default collection schedule is **02:00 UTC daily**. The collection's `data_date_utc` is always the latest fully closed UTC calendar day, normally the previous date.
-8. Never persist branch/ref names as an observation dimension. Resolve GitHub's current default ref internally and observe the canonical commit history reachable from it.
-9. Exclude the current UTC day from daily activity and Traffic series. Historical backfill must likewise include only fully closed UTC days.
-10. Keep the implementation cheap and dependency-light. Prefer GitHub APIs and Python standard library; do not add infrastructure without a concrete need.
-11. Historical backfill must remain a manual workflow and must not persist per-commit records.
-12. Update README.md and SCHEMA.md whenever stored field semantics change.
+- what repositories exist;
+- what a repository is for;
+- which repositories are active or archived;
+- how large they are at a high level;
+- how their commit activity, file count, languages, or GitHub Traffic look over time.
 
-## Stored-data boundary
+Follow the routes from `profiles/` into the generated evidence under `ForestTiger-GH/`. Do not start with collector code unless the task is specifically about implementation.
 
-Allowed examples: repository ID/name/description/visibility, dates, repository size, exact canonical file count when the Git tree is complete, stars/forks/subscribers, total canonical commits, daily canonical commit count, aggregate changed-file occurrences, language bytes, aggregate GitHub Traffic, collection status. Public repositories may additionally store GitHub top-referrer and popular-path tables. Private repositories must not persist referrers, paths, or page titles.
+Repository profiles cover the discovered repository universe regardless of visibility. Names, descriptions, visibility, and other stored high-level observations are part of the intended observatory surface.
 
-Disallowed examples: branch names as stored observations, source files, private documentation, persisted file paths or directory trees, commit text, identities of commit authors, changed paths, code statistics derived by cloning repositories, or reconstructed content-level history. Canonical Git-tree paths may be processed transiently only to count blob entries and must never be persisted.
+When interpreting data:
+
+- use `SCHEMA.md` for exact field semantics;
+- preserve `missing != zero` and `unknown != zero`;
+- treat `activity.csv` as the current canonical reachable Git history grouped by commit date, not as an immutable log of every temporary branch;
+- do not infer content that Observatory does not store.
+
+## 2. If the task is to develop github-observatory
+
+Keep the repository as a compact evidence collector, not an analytics product.
+
+Core rules:
+
+1. Repository discovery remains automatic; do not maintain a normal-operation allow-list.
+2. The scheduled collection runs at **02:00 UTC** and writes the latest fully closed UTC day. Current-day daily activity and Traffic rows are excluded.
+3. Branch/ref names are internal resolution details and must not become stored observation dimensions.
+4. Do not persist repository contents, source files, commit messages, authors, emails, diffs, patches, changed paths, directory trees, issue/PR bodies, workflow logs, artifacts, secrets, or security findings.
+5. Canonical Git-tree entries may be processed transiently to count files, but paths must not be persisted. Store an exact blob count only when the recursive tree is complete; otherwise preserve the count as unknown.
+6. Store observations, not derived conclusions. Do not add rankings, scores, trends, growth rates, moving averages, or similar analytics to the collection layer.
+7. Preserve provenance and `unknown != zero`. Never turn an unavailable value into zero.
+8. Historical backfill remains manual and must not fabricate historical repository, language, file-count, or rolling Traffic snapshots that GitHub cannot reconstruct.
+9. Keep implementation dependency-light and API-based; prefer Python standard library and GitHub APIs.
+10. Keep descriptive files route-oriented. Do not manually duplicate generated observations into documentation.
+11. Update `SCHEMA.md` whenever stored field semantics change, and update README only when the repository-level route or operating model changes.

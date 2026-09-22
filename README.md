@@ -1,113 +1,27 @@
 # github-observatory
 
-`github-observatory` is a private, compact observability repository for repositories owned by `ForestTiger-GH`.
+A compact repository-level observatory for the GitHub repositories discovered under one owner account.
 
-It preserves high-level GitHub-reported observations without copying repository contents. Public and private repositories are discovered automatically on every run, so new repositories enter the observatory without a manually maintained list.
+It preserves reusable, high-level observations over time without copying repository contents. Collection is automatic, branch names are not an observation dimension, and daily data is tied to fully closed UTC calendar days.
 
-## Core contract
+## Routes
 
-- **Metadata, not content.** Do not persist commit messages, authors, file names, diffs, patches, file contents, issue/PR bodies, workflow logs, or artifacts.
-- **Repository-level view.** Branch/ref names are not stored as an observation dimension. GitHub's current default ref is resolved only internally; activity represents the canonical commit history reachable from it.
-- **Closed UTC days only.** The scheduled collector runs at **02:00 UTC**. `data_date_utc` is the latest fully closed UTC calendar day, normally yesterday.
-- **No current-day daily rows.** Commit activity and daily Traffic rows from the unfinished UTC day are excluded.
-- **No analytical layer.** Moving averages, rates, scores, rankings, growth, and other derived analytics do not belong in the collection layer.
-- **Unknown is not zero.** A missing GitHub value is never silently replaced by zero.
+- `profiles/` — start here when the goal is to inspect the repository landscape.
+- `ForestTiger-GH/` — generated registry and per-repository observations.
+- `SCHEMA.md` — exact field semantics, provenance boundaries, and known limitations.
+- `scripts/` — collector implementation.
+- `.github/workflows/` — scheduled collection and manual backfill.
 
-## Time model
+## Collection model
 
-If the collector runs on `2026-09-24` at 02:00 UTC, its normal `data_date_utc` is `2026-09-23`.
+The routine collector runs daily at **02:00 UTC** and records the latest fully closed UTC day. Activity is reconstructed from the current canonical Git history reachable from GitHub's default ref, but ref names are not persisted.
 
-Repository/language values are delayed snapshots observed at the exact `observed_at` timestamp and attributed to that just-closed day. GitHub does not expose exact historical end-of-day snapshots for repository size, stars, forks, subscribers, or language bytes, so backfill does not fabricate them.
+Stored observations include repository metadata and descriptions, canonical file and commit counts, language bytes, daily commit activity, changed-file occurrences, and available GitHub Traffic data.
 
-Daily views/clones and commit activity are stored only for dates strictly before the current UTC date.
+Historical backfill is manual and only reconstructs observations that GitHub can support historically; it does not fabricate past snapshots.
 
-## Canonical activity and merges
+## Boundary
 
-Observatory does **not** sum branch activity.
+Observatory stores repository-level evidence, not repository contents or analytical conclusions. It does not persist source files, commit messages, author identities, diffs, changed paths, or directory trees.
 
-On each run, `activity.csv` is rebuilt from the current canonical Git history reachable from GitHub's current default ref. The ref name is not persisted.
-
-If an older commit becomes canonical through a later merge, it remains counted under its own Git `committedDate`; the merge commit is counted on its own date. A later merge, rebase, or history rewrite can therefore revise older activity rows. This is intentional: `activity.csv` is the current canonical history grouped by commit date, not an immutable log of every temporary branch.
-
-## Stored data
-
-For each repository the collector can store:
-
-- repository identity, GitHub description, visibility, archived/fork status, timestamps, GitHub size, exact canonical file count when available, total canonical commits, stars, forks, subscribers;
-- GitHub/Linguist language bytes;
-- canonical commits by UTC `committedDate`;
-- aggregate `changedFilesIfAvailable` as `changed_file_occurrences`;
-- Traffic views, unique visitors, clones, and unique cloners;
-- for public repositories only, rolling top-referrer and popular-path snapshots.
-
-`files` is the number of Git `blob` entries in the complete tree of the exact canonical commit observed that day. Tree paths are processed only transiently and are never persisted. If GitHub marks the recursive tree response as truncated, `files` is left unknown and `files_status=unknown_truncated` records the limitation.
-
-`changed_file_occurrences` is not unique file count. No file paths are requested merely to deduplicate it.
-
-## Layout
-
-```text
-.github/workflows/
-  collect.yml          # daily 02:00 UTC + manual
-  backfill.yml         # manual historical initialization
-
-scripts/
-  github_api.py
-  observatory.py
-  collect.py
-  backfill.py
-
-ForestTiger-GH/
-  repositories.csv
-  _collection/
-    runs.csv
-    repository-status.csv
-  <repository>/
-    repository.csv
-    activity.csv
-    languages.csv
-    traffic/
-      views.csv
-      clones.csv
-      referrers.csv     # public only
-      paths.csv         # public only
-```
-
-Repository directories are generated automatically. Stable GitHub repository IDs are used to preserve continuity through renames. If a repository disappears from the token's view, historical data remains and the registry marks it absent from the latest scan.
-
-## Authentication
-
-Create a fine-grained token for `ForestTiger-GH` with **All repositories** and read-only repository permissions:
-
-- **Metadata: Read**
-- **Contents: Read**
-- **Administration: Read**
-
-Store it as the Actions secret:
-
-```text
-OBSERVATORY_TOKEN
-```
-
-The read token observes source repositories. The workflow's short-lived `GITHUB_TOKEN` only writes generated Observatory data back to this repository.
-
-## First run: backfill
-
-Run **Actions → Backfill GitHub Observatory → Run workflow** once after adding `OBSERVATORY_TOKEN`.
-
-Backfill:
-
-1. discovers all current public and private repositories owned by `ForestTiger-GH` and refreshes the registry, including current GitHub descriptions;
-2. reconstructs canonical commit activity for all fully closed UTC days before today;
-3. captures all closed daily views/clones rows still available in GitHub's Traffic window;
-4. does **not** fabricate historical repository snapshots (including historical file counts), language snapshots, or rolling referrer/path snapshots from current unfinished-day state.
-
-The first normal 02:00 UTC collection creates the first repository/language snapshot and rolling public referrer/path snapshot for the just-closed day.
-
-## Routine collection
-
-Every day at 02:00 UTC the collector rediscovers the repository universe, rebuilds compact canonical activity through the latest closed day, refreshes closed views/clones rows, writes one delayed repository/language snapshot for `data_date_utc`, writes public rolling referrer/path snapshots, and commits all changes in one Git commit.
-
-Current-day partial rows are never persisted.
-
-See [SCHEMA.md](SCHEMA.md) for exact field semantics.
+See [SCHEMA.md](SCHEMA.md) for the data contract.
