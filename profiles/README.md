@@ -12,7 +12,7 @@ Open:
 
 It is the current registry of discovered repositories and includes the latest repository name, GitHub description, visibility, archived state, and discovery provenance.
 
-The observatory intentionally covers the discovered repository universe at a high level, including repositories that are not public.
+The observatory intentionally covers the full discovered repository universe at a high level; GitHub visibility is retained as profile metadata.
 
 ## One repository
 
