@@ -29,7 +29,7 @@ jobs:
       - name: Validate collector
         run: python -m py_compile scripts/*.py
 
-      - name: Backfill available history
+      - name: Backfill closed-day history
         env:
           OBSERVATORY_TOKEN: ${{ secrets.OBSERVATORY_TOKEN }}
           OBSERVATORY_OWNER: ForestTiger-GH
@@ -41,7 +41,7 @@ jobs:
           set -euo pipefail
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add ForestTiger-GH .observatory/state.json
+          git add ForestTiger-GH
           if git diff --cached --quiet; then
             echo "No observable changes."
             exit 0
