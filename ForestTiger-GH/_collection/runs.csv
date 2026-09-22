@@ -1,1 +1,2 @@
 data_date_utc,started_at,finished_at,mode,repositories_seen,repositories_succeeded,repositories_with_errors
+2026-09-21,2026-09-22T20:28:31Z,2026-09-22T20:31:29Z,backfill,23,23,0
