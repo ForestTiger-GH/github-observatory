@@ -1,53 +1,62 @@
 # github-observatory
 
-`github-observatory` is a private, compact observability repository for the repositories owned by `ForestTiger-GH`.
+`github-observatory` is a private, compact observability repository for repositories owned by `ForestTiger-GH`.
 
-Its purpose is to preserve a small set of GitHub-reported repository observations over time without copying repository contents. Public and private repositories are discovered automatically on every run. A newly created repository therefore enters the observatory without editing a repository list by hand.
+It preserves high-level GitHub-reported observations without copying repository contents. Public and private repositories are discovered automatically on every run, so new repositories enter the observatory without a manually maintained list.
 
-## Design principles
+## Core contract
 
-- **Metadata, not content.** The collector does not persist commit messages, authors, file names, diffs, patches, file contents, issue bodies, pull-request bodies, workflow logs, or artifacts.
-- **Compact observations.** Stored data consists of repository snapshots, language byte counts, commit counts, changed-file counts, and GitHub Traffic statistics where the API permits access.
-- **No analytical layer.** The repository does not calculate moving averages, growth rates, ratios, scores, trends, or other derived analytics.
-- **Unknown is not zero.** If GitHub cannot calculate `changedFilesIfAvailable`, that commit is counted in `commits_with_unknown_changed_files`; it is never silently treated as zero changed files.
-- **Default branch scope.** Commit activity is the history reachable from each repository's current default branch.
-- **Automatic repository discovery.** Each run calls the authenticated-user repository API with owner/all-visibility scope and filters to `ForestTiger-GH`.
+- **Metadata, not content.** Do not persist commit messages, authors, file names, diffs, patches, file contents, issue/PR bodies, workflow logs, or artifacts.
+- **Repository-level view.** Branch/ref names are not stored as an observation dimension. GitHub's current default ref is resolved only internally; activity represents the canonical commit history reachable from it.
+- **Closed UTC days only.** The scheduled collector runs at **01:00 UTC**. `data_date_utc` is the latest fully closed UTC calendar day, normally yesterday.
+- **No current-day daily rows.** Commit activity and daily Traffic rows from the unfinished UTC day are excluded.
+- **No analytical layer.** Moving averages, rates, scores, rankings, growth, and other derived analytics do not belong in the collection layer.
+- **Unknown is not zero.** A missing GitHub value is never silently replaced by zero.
 
-## What is collected
+## Time model
 
-For every repository visible to the read-only Observatory token:
+If the collector runs on `2026-09-24` at 01:00 UTC, its normal `data_date_utc` is `2026-09-23`.
 
-- repository identity and visibility;
-- archived/fork status;
-- creation/update/push timestamps;
-- GitHub repository size;
-- current default branch and total reachable commit count;
-- stars, forks, and subscribers;
-- GitHub language classification in bytes;
-- commits by UTC commit date;
-- the sum of GitHub's per-commit `changedFilesIfAvailable` values, stored as `changed_file_occurrences`;
-- Traffic views, unique visitors, clones, and unique cloners when GitHub makes Traffic available; top referrers and popular paths are collected only for public repositories.
+Repository/language values are delayed snapshots observed at the exact `observed_at` timestamp and attributed to that just-closed day. GitHub does not expose exact historical end-of-day snapshots for repository size, stars, forks, subscribers, or language bytes, so backfill does not fabricate them.
 
-The changed-file metric is deliberately **not** a count of unique file paths. If the same file is changed in ten commits, it can contribute ten occurrences. No file names are stored.
+Daily views/clones and commit activity are stored only for dates strictly before the current UTC date.
 
-## Repository layout
+## Canonical activity and merges
+
+Observatory does **not** sum branch activity.
+
+On each run, `activity.csv` is rebuilt from the current canonical Git history reachable from GitHub's current default ref. The ref name is not persisted.
+
+If an older commit becomes canonical through a later merge, it remains counted under its own Git `committedDate`; the merge commit is counted on its own date. A later merge, rebase, or history rewrite can therefore revise older activity rows. This is intentional: `activity.csv` is the current canonical history grouped by commit date, not an immutable log of every temporary branch.
+
+## Stored data
+
+For each repository the collector can store:
+
+- repository identity, visibility, archived/fork status, timestamps, GitHub size, total canonical commits, stars, forks, subscribers;
+- GitHub/Linguist language bytes;
+- canonical commits by UTC `committedDate`;
+- aggregate `changedFilesIfAvailable` as `changed_file_occurrences`;
+- Traffic views, unique visitors, clones, and unique cloners;
+- for public repositories only, rolling top-referrer and popular-path snapshots.
+
+`changed_file_occurrences` is not unique file count. No file paths are requested merely to deduplicate it.
+
+## Layout
 
 ```text
 .github/workflows/
-  collect.yml          # daily 06:00 Europe/Helsinki + manual run
-  backfill.yml         # manual one-time/history rebuild
+  collect.yml          # daily 01:00 UTC + manual
+  backfill.yml         # manual historical initialization
 
 scripts/
-  github_api.py        # minimal REST + GraphQL client
-  observatory.py       # discovery, collection, storage
-  collect.py           # regular collector entry point
-  backfill.py          # historical backfill entry point
-
-.observatory/
-  state.json           # technical state; one last default-branch head OID per repo
+  github_api.py
+  observatory.py
+  collect.py
+  backfill.py
 
 ForestTiger-GH/
-  repositories.csv     # current/past discovered repository registry
+  repositories.csv
   _collection/
     runs.csv
     repository-status.csv
@@ -58,47 +67,45 @@ ForestTiger-GH/
     traffic/
       views.csv
       clones.csv
-      referrers.csv     # public repositories only
-      paths.csv         # public repositories only
+      referrers.csv     # public only
+      paths.csv         # public only
 ```
 
-`ForestTiger-GH/<repository>/` directories are generated automatically. If a repository is renamed, the collector moves the existing directory to the new repository name using the stable GitHub repository ID. If a repository later disappears from the token's view, its historical directory is retained and `present_on_last_scan` becomes `false` in the registry.
+Repository directories are generated automatically. Stable GitHub repository IDs are used to preserve continuity through renames. If a repository disappears from the token's view, historical data remains and the registry marks it absent from the latest scan.
 
 ## Authentication
 
-Create one **fine-grained personal access token** for `ForestTiger-GH` with repository access set to **All repositories**. Give it read-only repository permissions:
+Create a fine-grained token for `ForestTiger-GH` with **All repositories** and read-only repository permissions:
 
 - **Metadata: Read**
 - **Contents: Read**
 - **Administration: Read**
 
-Store the token in this repository as the Actions secret:
+Store it as the Actions secret:
 
 ```text
 OBSERVATORY_TOKEN
 ```
 
-The token is used only to read the repositories being observed. The workflow's short-lived `GITHUB_TOKEN` has `contents: write` only for committing generated Observatory data back to `github-observatory`.
+The read token observes source repositories. The workflow's short-lived `GITHUB_TOKEN` only writes generated Observatory data back to this repository.
 
-## First run
+## First run: backfill
 
 Run **Actions → Backfill GitHub Observatory → Run workflow** once after adding `OBSERVATORY_TOKEN`.
 
-Backfill performs the same automatic repository discovery as the daily collector and then:
+Backfill:
 
-1. stores the current repository snapshot and language classification;
-2. walks the complete history reachable from each current default branch, requesting only commit OID, commit timestamp, and `changedFilesIfAvailable`;
-3. aggregates those transient commit records into daily `activity.csv` rows and does **not** persist per-commit records;
-4. captures the Traffic window currently available from GitHub (views/clones are limited by GitHub to the recent window; older Traffic cannot be reconstructed retroactively).
+1. discovers all current public and private repositories owned by `ForestTiger-GH`;
+2. reconstructs canonical commit activity for all fully closed UTC days before today;
+3. captures all closed daily views/clones rows still available in GitHub's Traffic window;
+4. does **not** fabricate historical repository snapshots, language snapshots, or rolling referrer/path snapshots from current unfinished-day state.
 
-After that, `collect.yml` runs daily at **06:00 Europe/Helsinki**, including daylight-saving changes automatically.
+The first normal 01:00 UTC collection creates the first repository/language snapshot and rolling public referrer/path snapshot for the just-closed day.
 
 ## Routine collection
 
-The daily collector does not rescan every commit in every repository. It remembers the last observed default-branch head OID and walks only commits newly reachable from the current head until the previous head is found. If the previous head is no longer an ancestor (for example after a force push), the collector rebuilds that repository's compact activity history from the currently reachable default-branch history.
+Every day at 01:00 UTC the collector rediscovers the repository universe, rebuilds compact canonical activity through the latest closed day, refreshes closed views/clones rows, writes one delayed repository/language snapshot for `data_date_utc`, writes public rolling referrer/path snapshots, and commits all changes in one Git commit.
 
-## Cost profile
-
-The implementation uses only GitHub-hosted Actions, GitHub APIs, Python's standard library, and normal Git storage. It installs no third-party Python packages and stores no Actions artifacts or caches.
+Current-day partial rows are never persisted.
 
 See [SCHEMA.md](SCHEMA.md) for exact field semantics.
