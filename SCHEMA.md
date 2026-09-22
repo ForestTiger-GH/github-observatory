@@ -6,9 +6,9 @@ All CSV files are UTF-8 with a header row. Empty means unknown/unavailable unles
 
 The Observatory uses UTC calendar days.
 
-The scheduled collector runs at **01:00 UTC**. `data_date_utc` is the latest fully closed UTC day, normally the previous calendar date. `observed_at` is the exact UTC timestamp when GitHub was queried.
+The scheduled collector runs at **02:00 UTC**. `data_date_utc` is the latest fully closed UTC day, normally the previous calendar date. `observed_at` is the exact UTC timestamp when GitHub was queried.
 
-The one-hour delay is an operational buffer. Repository size, stars, forks, subscribers, total canonical commits, and language bytes are delayed snapshots observed after the day boundary and attributed to the just-closed `data_date_utc`. They are not claims that GitHub exposed an exact historical 00:00 UTC snapshot.
+The two-hour delay is an operational buffer. Repository size, stars, forks, subscribers, total canonical commits, and language bytes are delayed snapshots observed after the day boundary and attributed to the just-closed `data_date_utc`. They are not claims that GitHub exposed an exact historical 00:00 UTC snapshot.
 
 The current UTC day is excluded from `activity.csv`, `views.csv`, and `clones.csv`.
 
@@ -26,6 +26,7 @@ Registry of repositories ever discovered:
 
 - `repository_id`: stable GitHub repository ID.
 - `name`, `full_name`: latest observed names.
+- `description`: latest GitHub repository description; empty when GitHub reports no description.
 - `visibility`, `archived`: latest GitHub metadata.
 - `first_seen_at`, `last_seen_at`: Observatory discovery timestamps.
 - `present_on_last_scan`: whether the repository was present in the latest universe scan.
@@ -39,16 +40,18 @@ One delayed repository snapshot per `data_date_utc`. Rerunning the same closed d
 Fields:
 
 - `data_date_utc`, `observed_at`
-- `repository_id`, `name`, `full_name`, `visibility`
+- `repository_id`, `name`, `full_name`, `description`, `visibility`
 - `archived`, `fork`
 - `created_at`, `updated_at`, `pushed_at`
 - `size_kb`: GitHub repository `size`
+- `files`: exact number of Git `blob` entries in the complete recursive tree of the exact canonical commit observed at `observed_at`; empty when the recursive tree is incomplete
+- `files_status`: `exact`, `exact_empty_repository`, or `unknown_truncated`; this distinguishes a known zero from an unavailable complete count
 - `commits`: GitHub GraphQL `CommitHistoryConnection.totalCount` reachable from the internally resolved canonical/default ref at `observed_at`
 - `stars`: `stargazers_count`
 - `forks`: `forks_count`
 - `subscribers`: `subscribers_count`
 
-Backfill does not fabricate historical rows here.
+Backfill does not fabricate historical rows here. Repository descriptions are refreshed in the current registry during discovery, but historical descriptions and historical file counts are not reconstructed.
 
 ## `<repo>/activity.csv`
 

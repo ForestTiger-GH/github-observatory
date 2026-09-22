@@ -18,8 +18,8 @@ UTC = dt.timezone.utc
 
 REPOSITORY_FIELDS = [
     "data_date_utc", "observed_at", "repository_id", "name", "full_name",
-    "visibility", "archived", "fork", "created_at", "updated_at", "pushed_at",
-    "size_kb", "commits", "stars", "forks", "subscribers",
+    "description", "visibility", "archived", "fork", "created_at", "updated_at", "pushed_at",
+    "size_kb", "files", "files_status", "commits", "stars", "forks", "subscribers",
 ]
 ACTIVITY_FIELDS = [
     "activity_date_utc", "commits", "changed_file_occurrences",
@@ -30,7 +30,7 @@ TRAFFIC_DAILY_FIELDS = ["traffic_date_utc", "count", "uniques", "last_observed_a
 REFERRER_FIELDS = ["data_date_utc", "observed_at", "referrer", "count", "uniques"]
 PATH_FIELDS = ["data_date_utc", "observed_at", "path", "title", "count", "uniques"]
 REGISTRY_FIELDS = [
-    "repository_id", "name", "full_name", "visibility", "archived",
+    "repository_id", "name", "full_name", "description", "visibility", "archived",
     "first_seen_at", "last_seen_at", "present_on_last_scan",
 ]
 STATUS_FIELDS = [
@@ -48,6 +48,7 @@ class RepoRef:
     id: str
     name: str
     full_name: str
+    description: str | None
     visibility: str
     archived: bool
 
@@ -154,6 +155,7 @@ def list_owned_repositories(client: GitHubClient) -> list[RepoRef]:
                 id=str(repo["id"]),
                 name=repo["name"],
                 full_name=repo["full_name"],
+                description=repo.get("description"),
                 visibility=visibility,
                 archived=bool(repo.get("archived")),
             )
@@ -183,6 +185,7 @@ def update_registry(repos: list[RepoRef], observed_at: str) -> None:
             "repository_id": repo.id,
             "name": repo.name,
             "full_name": repo.full_name,
+            "description": repo.description or "",
             "visibility": repo.visibility,
             "archived": str(repo.archived).lower(),
             "first_seen_at": prior.get("first_seen_at") or observed_at,
@@ -198,12 +201,13 @@ def repository_detail(client: GitHubClient, repo: RepoRef) -> dict[str, Any]:
     return client.get(f"/repos/{OWNER}/{repo.name}").data
 
 
-GRAPHQL_REPO_TOTAL = """
+GRAPHQL_REPO_HEAD = """
 query($owner: String!, $name: String!) {
   repository(owner: $owner, name: $name) {
     defaultBranchRef {
       target {
         ... on Commit {
+          oid
           history(first: 1) { totalCount }
         }
       }
@@ -236,13 +240,34 @@ query($owner: String!, $name: String!, $after: String) {
 """
 
 
-def get_canonical_total(client: GitHubClient, repo: RepoRef) -> int:
-    data = client.graphql(GRAPHQL_REPO_TOTAL, {"owner": OWNER, "name": repo.name})
+def get_canonical_head_and_total(client: GitHubClient, repo: RepoRef) -> tuple[str | None, int]:
+    data = client.graphql(GRAPHQL_REPO_HEAD, {"owner": OWNER, "name": repo.name})
     repository = data.get("repository")
     if not repository or not repository.get("defaultBranchRef"):
-        return 0
+        return None, 0
     target = repository["defaultBranchRef"].get("target") or {}
-    return int((target.get("history") or {}).get("totalCount") or 0)
+    return target.get("oid"), int((target.get("history") or {}).get("totalCount") or 0)
+
+
+def get_canonical_file_count(
+    client: GitHubClient,
+    repo: RepoRef,
+    head_oid: str | None,
+) -> tuple[int | None, str]:
+    if head_oid is None:
+        return 0, "exact_empty_repository"
+    data = client.get(
+        f"/repos/{OWNER}/{repo.name}/git/trees/{head_oid}",
+        {"recursive": "1"},
+    ).data
+    if not isinstance(data, dict):
+        raise RuntimeError("Unexpected Git tree response")
+    if data.get("truncated"):
+        return None, "unknown_truncated"
+    tree = data.get("tree")
+    if not isinstance(tree, list):
+        raise RuntimeError("Unexpected Git tree entries")
+    return sum(1 for entry in tree if entry.get("type") == "blob"), "exact"
 
 
 def iter_canonical_history(client: GitHubClient, repo: RepoRef):
@@ -310,15 +335,18 @@ def collect_repository_snapshot(
     repo: RepoRef,
     observed_at: str,
     data_date: str,
+    head_oid: str | None,
     total_commits: int,
 ) -> None:
     detail = repository_detail(client, repo)
+    files, files_status = get_canonical_file_count(client, repo, head_oid)
     row = {
         "data_date_utc": data_date,
         "observed_at": observed_at,
         "repository_id": str(detail["id"]),
         "name": detail["name"],
         "full_name": detail["full_name"],
+        "description": detail.get("description") or "",
         "visibility": detail.get("visibility") or ("private" if detail.get("private") else "public"),
         "archived": str(bool(detail.get("archived"))).lower(),
         "fork": str(bool(detail.get("fork"))).lower(),
@@ -326,6 +354,8 @@ def collect_repository_snapshot(
         "updated_at": detail.get("updated_at") or "",
         "pushed_at": detail.get("pushed_at") or "",
         "size_kb": detail.get("size", ""),
+        "files": "" if files is None else files,
+        "files_status": files_status,
         "commits": total_commits,
         "stars": detail.get("stargazers_count", ""),
         "forks": detail.get("forks_count", ""),
@@ -499,9 +529,10 @@ def collect(mode: str) -> int:
             "traffic_status": "not_run",
         }
 
+        head_oid: str | None = None
         total_commits: int | None = None
         try:
-            total_commits = get_canonical_total(client, repo)
+            head_oid, total_commits = get_canonical_head_and_total(client, repo)
             statuses["activity_status"] = rebuild_activity(
                 client,
                 repo,
@@ -515,8 +546,15 @@ def collect(mode: str) -> int:
         if mode == "collect":
             try:
                 if total_commits is None:
-                    total_commits = get_canonical_total(client, repo)
-                collect_repository_snapshot(client, repo, observed_at, data_date, total_commits)
+                    head_oid, total_commits = get_canonical_head_and_total(client, repo)
+                collect_repository_snapshot(
+                    client,
+                    repo,
+                    observed_at,
+                    data_date,
+                    head_oid,
+                    total_commits,
+                )
                 statuses["metadata_status"] = "ok"
             except Exception as exc:
                 statuses["metadata_status"] = status_for_error(exc)
