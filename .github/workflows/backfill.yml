@@ -1,0 +1,47 @@
+name: Backfill GitHub Observatory
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: github-observatory-write
+  cancel-in-progress: false
+
+jobs:
+  backfill:
+    runs-on: ubuntu-latest
+    timeout-minutes: 120
+
+    steps:
+      - name: Checkout observatory
+        uses: actions/checkout@v7
+        with:
+          fetch-depth: 1
+
+      - name: Set up Python
+        uses: actions/setup-python@v7
+        with:
+          python-version: "3.13"
+
+      - name: Backfill available history
+        env:
+          OBSERVATORY_TOKEN: ${{ secrets.OBSERVATORY_TOKEN }}
+          OBSERVATORY_OWNER: ForestTiger-GH
+        run: python scripts/backfill.py
+
+      - name: Commit backfill
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add ForestTiger-GH .observatory/state.json
+          if git diff --cached --quiet; then
+            echo "No observable changes."
+            exit 0
+          fi
+          git commit -m "Backfill repository observations $(date -u +%F)"
+          git push
