@@ -1,0 +1,50 @@
+name: Collect GitHub Observatory
+
+on:
+  schedule:
+    - cron: "0 6 * * *"
+      timezone: "Europe/Helsinki"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: github-observatory-write
+  cancel-in-progress: false
+
+jobs:
+  collect:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+
+    steps:
+      - name: Checkout observatory
+        uses: actions/checkout@v7
+        with:
+          fetch-depth: 1
+
+      - name: Set up Python
+        uses: actions/setup-python@v7
+        with:
+          python-version: "3.13"
+
+      - name: Collect observations
+        env:
+          OBSERVATORY_TOKEN: ${{ secrets.OBSERVATORY_TOKEN }}
+          OBSERVATORY_OWNER: ForestTiger-GH
+        run: python scripts/collect.py
+
+      - name: Commit observations
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add ForestTiger-GH .observatory/state.json
+          if git diff --cached --quiet; then
+            echo "No observable changes."
+            exit 0
+          fi
+          git commit -m "Collect repository observations $(date -u +%F)"
+          git push
