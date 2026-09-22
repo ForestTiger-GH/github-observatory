@@ -29,6 +29,9 @@ jobs:
         with:
           python-version: "3.13"
 
+      - name: Validate collector
+        run: python -m py_compile scripts/*.py
+
       - name: Collect observations
         env:
           OBSERVATORY_TOKEN: ${{ secrets.OBSERVATORY_TOKEN }}
