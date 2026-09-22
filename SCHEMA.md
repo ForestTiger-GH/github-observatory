@@ -1,109 +1,144 @@
 # Data contract
 
-All CSV files are UTF-8 with a header row. Empty means unknown/unavailable unless a field explicitly defines another meaning. Counts reported as zero are actual zero values returned or countable from the observed Git history; an unavailable value is not converted to zero.
+All CSV files are UTF-8 with a header row. Empty means unknown/unavailable unless explicitly stated otherwise. Unknown is not converted to zero.
+
+## Time convention
+
+The Observatory uses UTC calendar days.
+
+The scheduled collector runs at **01:00 UTC**. `data_date_utc` is the latest fully closed UTC day, normally the previous calendar date. `observed_at` is the exact UTC timestamp when GitHub was queried.
+
+The one-hour delay is an operational buffer. Repository size, stars, forks, subscribers, total canonical commits, and language bytes are delayed snapshots observed after the day boundary and attributed to the just-closed `data_date_utc`. They are not claims that GitHub exposed an exact historical 00:00 UTC snapshot.
+
+The current UTC day is excluded from `activity.csv`, `views.csv`, and `clones.csv`.
+
+## Branch/ref boundary
+
+Branch/ref names are not stored observation dimensions.
+
+Internally, the collector resolves GitHub's current default ref and treats the commit graph reachable from it as the repository's current canonical history. The stored data does not expose the ref name.
+
+A later merge or rebase can revise older activity dates if older commits newly become reachable. Such commits remain assigned to their own Git `committedDate`; they are not reassigned to the merge date.
 
 ## `ForestTiger-GH/repositories.csv`
 
-Registry of repositories ever discovered by the collector.
+Registry of repositories ever discovered:
 
-- `repository_id`: stable numeric GitHub repository ID.
-- `name`, `full_name`: latest observed repository names.
-- `visibility`: GitHub visibility, normally `public` or `private`.
-- `archived`: latest observed archived flag.
-- `default_branch`: latest default branch name.
-- `first_seen_at`: first Observatory discovery timestamp.
-- `last_seen_at`: latest successful universe scan in which the repository was present.
+- `repository_id`: stable GitHub repository ID.
+- `name`, `full_name`: latest observed names.
+- `visibility`, `archived`: latest GitHub metadata.
+- `first_seen_at`, `last_seen_at`: Observatory discovery timestamps.
 - `present_on_last_scan`: whether the repository was present in the latest universe scan.
 
-This registry is technical discovery state, not an analytical series.
+No branch name is stored.
 
 ## `<repo>/repository.csv`
 
-One compact repository snapshot per UTC observation date. A manual rerun on the same UTC date replaces that date's row.
+One delayed repository snapshot per `data_date_utc`. Rerunning the same closed day replaces that row.
 
-- `observation_date_utc`, `observed_at`: Observatory observation time.
-- `repository_id`, `name`, `full_name`, `visibility`: GitHub identity fields.
-- `archived`, `fork`: GitHub booleans.
-- `created_at`, `updated_at`, `pushed_at`: GitHub timestamps.
-- `size_kb`: GitHub repository `size` field as reported by the repository API.
-- `default_branch`: current default branch.
-- `default_branch_commits`: current GraphQL `CommitHistoryConnection.totalCount` reachable from the default branch.
-- `stars`: GitHub `stargazers_count`.
-- `forks`: GitHub `forks_count`.
-- `subscribers`: GitHub `subscribers_count` (actual repository watchers/subscribers; deliberately not the historical REST `watchers_count` alias for stars).
+Fields:
+
+- `data_date_utc`, `observed_at`
+- `repository_id`, `name`, `full_name`, `visibility`
+- `archived`, `fork`
+- `created_at`, `updated_at`, `pushed_at`
+- `size_kb`: GitHub repository `size`
+- `commits`: GitHub GraphQL `CommitHistoryConnection.totalCount` reachable from the internally resolved canonical/default ref at `observed_at`
+- `stars`: `stargazers_count`
+- `forks`: `forks_count`
+- `subscribers`: `subscribers_count`
+
+Backfill does not fabricate historical rows here.
 
 ## `<repo>/activity.csv`
 
-Compact default-branch commit activity grouped by the UTC calendar date of Git `committedDate`.
+Current canonical Git history grouped by UTC Git `committedDate`.
 
-- `activity_date_utc`: UTC date derived from GitHub's commit `committedDate`.
-- `commits`: number of commits currently reachable from the default branch with that commit date.
-- `changed_file_occurrences`: sum of GitHub GraphQL `changedFilesIfAvailable` for those commits when available.
-- `commits_with_unknown_changed_files`: number of commits for which GitHub returned `null` for `changedFilesIfAvailable`.
-- `last_observed_at`: latest collection that changed or rebuilt that date's row.
+Fields:
 
-`changed_file_occurrences` is **not unique files per day**. The collector never requests or stores file paths merely to deduplicate them.
+- `activity_date_utc`
+- `commits`
+- `changed_file_occurrences`: sum of GitHub GraphQL `changedFilesIfAvailable` where available
+- `commits_with_unknown_changed_files`: commits for which GitHub returned `null`
+- `last_observed_at`
 
-Per-commit OIDs are used transiently during traversal. Only one head OID per repository is retained in `.observatory/state.json` to support incremental collection; no per-commit dataset is stored.
+Rows from the current UTC day are excluded.
+
+`changed_file_occurrences` is not a unique-file count. No per-commit dataset, commit message, author identity, file path, diff, or patch is persisted.
 
 ## `<repo>/languages.csv`
 
-One long-format language snapshot per UTC observation date.
+Long-format delayed snapshot:
 
-- `observation_date_utc`, `observed_at`: observation time.
-- `language`: GitHub/Linguist language name.
-- `bytes`: number of bytes GitHub attributes to that language.
+- `data_date_utc`
+- `observed_at`
+- `language`
+- `bytes`
 
-No percentages are stored. No row for a date can mean either an empty GitHub language result or a failed collection; use `_collection/repository-status.csv` to distinguish them.
+No percentages are stored. Backfill does not fabricate historical language snapshots.
 
 ## `<repo>/traffic/views.csv`
 
-Daily GitHub Traffic view observations. GitHub aligns Traffic daily timestamps to UTC.
+Daily GitHub Traffic views:
 
 - `traffic_date_utc`
 - `count`
 - `uniques`
 - `last_observed_at`
 
-Rows are upserted by traffic date because GitHub exposes only a recent rolling window. Git history preserves any revisions made by later observations.
+Only fully closed UTC days are stored. Existing rows are refreshed while still present in GitHub's rolling Traffic window.
 
 ## `<repo>/traffic/clones.csv`
 
-Same layout and semantics as `views.csv`, for repository clones and unique cloners.
+Same schema and closed-day rule as `views.csv`, for clones and unique cloners.
 
 ## `<repo>/traffic/referrers.csv`
 
-Daily snapshots of GitHub's top referrers for its current rolling Traffic window. This dataset is collected for **public repositories only** to avoid leaking navigation/referral details from private projects.
+Public repositories only. Snapshot of GitHub's current rolling top-referrer table:
 
-- `observation_date_utc`, `observed_at`
+- `data_date_utc`
+- `observed_at`
 - `referrer`
-- `count`, `uniques`
+- `count`
+- `uniques`
 
-These rows are **not daily referrer counts**. They are observations of GitHub's rolling-window top-referrer table on that observation date.
+These are rolling-window snapshots, not daily referrer counts. Backfill does not fabricate historical snapshots from the current table.
 
 ## `<repo>/traffic/paths.csv`
 
-Daily snapshots of GitHub's popular-path table for its current rolling Traffic window. This dataset is collected for **public repositories only** so private file/page names are never persisted in Observatory.
+Public repositories only. Snapshot of GitHub's current rolling popular-path table:
 
-- `observation_date_utc`, `observed_at`
-- `path`, `title`
-- `count`, `uniques`
+- `data_date_utc`
+- `observed_at`
+- `path`
+- `title`
+- `count`
+- `uniques`
 
-These rows are **not daily path counts**; they preserve the reported rolling-window table.
+These are rolling-window snapshots, not daily path counts. Private paths/titles are never persisted.
 
 ## `_collection/repository-status.csv`
 
-Per-repository source availability and collection status for each UTC observation date.
+Per-repository collection/source status for each `data_date_utc`.
 
-Statuses such as `ok`, `unchanged`, `full_history`, `unavailable_http_403`, and `error_http_*` prevent missing data from being silently reinterpreted as zero.
+Backfill marks non-historical snapshot families as `skipped_backfill_current_snapshot`. Error/unavailable states are explicit and are never interpreted as zero.
 
 ## `_collection/runs.csv`
 
-One row per UTC date and collection mode (`collect` or `backfill`) with start/end timestamps and repository success/error counts. These are operational provenance fields, not repository analytics.
+One row per `data_date_utc` and mode (`collect` or `backfill`) with exact start/end timestamps and repository success/error counts.
+
+## Backfill boundary
+
+Backfill reconstructs only historically supportable observations:
+
+- canonical commit activity for all reachable commits whose `committedDate` is before the current UTC date;
+- closed daily views/clones rows still available in GitHub's Traffic window.
+
+Backfill does not reconstruct historical repository snapshots, language snapshots, rolling referrer/path snapshots, or commits no longer reachable from the current canonical history.
 
 ## Scope limitations
 
-- Activity covers commits reachable from the **current default branch**, not every branch in the repository.
-- Backfill can reconstruct default-branch commit dates and changed-file counts from reachable Git history, but it cannot reconstruct historical repository-size snapshots or historical language classifications that GitHub does not expose.
-- GitHub Traffic is only available for the recent window exposed by the Traffic API; Observatory cannot reconstruct Traffic from before the first successful collection.
-- Traffic availability for private repositories depends on GitHub access/plan and API authorization. An unavailable Traffic endpoint is recorded as unavailable, never as zero traffic.
+- `activity.csv` is a view of the current canonical reachable Git graph grouped by commit date, not an immutable log of every temporary branch.
+- A later merge/rebase/history rewrite can revise older activity rows.
+- GitHub Traffic history is limited to the recent window exposed by the Traffic API.
+- Private Traffic availability depends on GitHub access/plan and token authorization; unavailable is recorded as unavailable, never zero.
