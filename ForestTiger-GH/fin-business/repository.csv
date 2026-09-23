@@ -1,0 +1,2 @@
+data_date_utc,observed_at,repository_id,name,full_name,description,visibility,archived,fork,created_at,updated_at,pushed_at,size_kb,files,files_status,commits,stars,forks,subscribers
+2026-09-22,2026-09-23T06:57:33Z,1016958961,fin-business,ForestTiger-GH/fin-business,,public,false,false,2025-07-09T19:50:08Z,2025-09-06T18:00:04Z,2025-09-06T18:00:00Z,226,2,exact,63,0,0,0

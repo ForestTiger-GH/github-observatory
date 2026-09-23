@@ -1,0 +1,2 @@
+data_date_utc,observed_at,repository_id,name,full_name,description,visibility,archived,fork,created_at,updated_at,pushed_at,size_kb,files,files_status,commits,stars,forks,subscribers
+2026-09-22,2026-09-23T06:57:33Z,1382422717,newsflow,ForestTiger-GH/newsflow,Automated external data gateway,public,false,false,2026-09-22T22:26:18Z,2026-09-22T23:46:44Z,2026-09-22T23:46:40Z,117,10,exact,8,0,0,0

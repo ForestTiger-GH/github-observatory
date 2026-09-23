@@ -1,0 +1,2 @@
+data_date_utc,observed_at,repository_id,name,full_name,description,visibility,archived,fork,created_at,updated_at,pushed_at,size_kb,files,files_status,commits,stars,forks,subscribers
+2026-09-22,2026-09-23T06:57:33Z,1124795931,LIN-Core,ForestTiger-GH/LIN-Core,"High-performance market intelligence engine that ingests and normalizes multi-source data, runs deep analytics (levels, patterns, signals), and serves clean, ready-to-trade outputs via a simple API.",private,false,false,2025-12-29T16:20:47Z,2026-05-08T16:09:06Z,2026-05-08T16:09:02Z,1560,402,exact,426,0,0,0

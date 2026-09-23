@@ -1,0 +1,2 @@
+data_date_utc,observed_at,repository_id,name,full_name,description,visibility,archived,fork,created_at,updated_at,pushed_at,size_kb,files,files_status,commits,stars,forks,subscribers
+2026-09-22,2026-09-23T06:57:33Z,1380517906,mandat-forecast,ForestTiger-GH/mandat-forecast,Cognitive logic for forecasting work,private,false,false,2026-09-21T20:50:11Z,2026-09-22T20:00:45Z,2026-09-22T18:38:11Z,830,103,exact,223,0,0,0

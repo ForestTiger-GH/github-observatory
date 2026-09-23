@@ -1,0 +1,2 @@
+data_date_utc,observed_at,repository_id,name,full_name,description,visibility,archived,fork,created_at,updated_at,pushed_at,size_kb,files,files_status,commits,stars,forks,subscribers
+2026-09-22,2026-09-23T06:57:33Z,1371796532,analytics,ForestTiger-GH/analytics,Space for everyday work,private,false,false,2026-09-15T16:36:51Z,2026-09-22T20:05:32Z,2026-09-18T10:13:08Z,3269,289,exact,430,0,0,0

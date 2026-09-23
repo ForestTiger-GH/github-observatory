@@ -1,0 +1,2 @@
+data_date_utc,observed_at,repository_id,name,full_name,description,visibility,archived,fork,created_at,updated_at,pushed_at,size_kb,files,files_status,commits,stars,forks,subscribers
+2026-09-22,2026-09-23T06:57:33Z,1279514466,stratbox-windows,ForestTiger-GH/stratbox-windows,Desktop stratbox-application via AppDock for macroeconomic and banking data work ,public,false,false,2026-06-24T19:00:30Z,2026-09-22T20:19:15Z,2026-08-05T08:08:26Z,1542,198,exact,22,0,0,0
