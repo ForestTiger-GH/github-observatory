@@ -6,3 +6,10 @@ data_date_utc,observed_at,path,title,count,uniques
 2026-09-22,2026-09-23T06:57:33Z,/ForestTiger-GH/stratbox/tree/main/src/stratbox/macrobanks/cbr_file_collector,/tree/main/src/stratbox/macrobanks/cbr_file_collector,1,1
 2026-09-22,2026-09-23T06:57:33Z,/ForestTiger-GH/stratbox/tree/main/src/stratbox/registries,/tree/main/src/stratbox/registries,1,1
 2026-09-22,2026-09-23T06:57:33Z,/ForestTiger-GH/stratbox/tree/main/src/stratbox/registries/_resources,/tree/main/src/stratbox/registries/_resources,1,1
+2026-09-23,2026-09-24T06:55:48Z,/ForestTiger-GH/stratbox,Overview,5,1
+2026-09-23,2026-09-24T06:55:48Z,/ForestTiger-GH/stratbox/blob/main/src/stratbox/macrobanks/cbr_file_collector/registry.py,/blob/main/src/stratbox/macrobanks/cbr_file_collector/registry.py,2,1
+2026-09-23,2026-09-24T06:55:48Z,/ForestTiger-GH/stratbox/tree/main/src/stratbox,/tree/main/src/stratbox,2,1
+2026-09-23,2026-09-24T06:55:48Z,/ForestTiger-GH/stratbox/tree/main/src/stratbox/macrobanks,/tree/main/src/stratbox/macrobanks,1,1
+2026-09-23,2026-09-24T06:55:48Z,/ForestTiger-GH/stratbox/tree/main/src/stratbox/macrobanks/cbr_file_collector,/tree/main/src/stratbox/macrobanks/cbr_file_collector,1,1
+2026-09-23,2026-09-24T06:55:48Z,/ForestTiger-GH/stratbox/tree/main/src/stratbox/registries,/tree/main/src/stratbox/registries,1,1
+2026-09-23,2026-09-24T06:55:48Z,/ForestTiger-GH/stratbox/tree/main/src/stratbox/registries/_resources,/tree/main/src/stratbox/registries/_resources,1,1
