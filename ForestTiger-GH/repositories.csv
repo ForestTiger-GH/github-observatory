@@ -1,27 +1,27 @@
 repository_id,name,full_name,description,visibility,archived,first_seen_at,last_seen_at,present_on_last_scan
-1371796532,analytics,ForestTiger-GH/analytics,Space for everyday work,private,false,2026-09-22T20:28:31Z,2026-09-24T06:55:48Z,true
-1252551768,AppDock,ForestTiger-GH/AppDock,"End-to-end platform for packaging, productizing, deploying, running and remotely operating applications across platforms, repositories and nodes — with hosting, publication, control planes, secure connectivity, MCP/A2A and extensible interoperability",private,false,2026-09-22T20:28:31Z,2026-09-24T06:55:48Z,true
-1169689579,Compass,ForestTiger-GH/Compass,"Trade engine for the declarative description, compilation, execution, analysis, and explainable implementation of trading strategies",private,false,2026-09-22T20:28:31Z,2026-09-24T06:55:48Z,true
-344921764,COTRA,ForestTiger-GH/COTRA,CFTC Commitments of Traders Reports Analysis,public,false,2026-09-22T20:28:31Z,2026-09-24T06:55:48Z,true
-1016958961,fin-business,ForestTiger-GH/fin-business,,public,false,2026-09-22T20:28:31Z,2026-09-24T06:55:48Z,true
-347684425,Finance-Board,ForestTiger-GH/Finance-Board,,public,true,2026-09-22T20:28:31Z,2026-09-24T06:55:48Z,true
-1381835317,github-observatory,ForestTiger-GH/github-observatory,Daily monitoring of GitHub repositories,public,false,2026-09-22T20:28:31Z,2026-09-24T06:55:48Z,true
-1169689333,Lepilot,ForestTiger-GH/Lepilot,"Automated Capital Management System via AppDock based on Compass-engine, LIN-Core-data and bank&broker services ",private,false,2026-09-22T20:28:31Z,2026-09-24T06:55:48Z,true
-990158962,LEPILOT_old,ForestTiger-GH/LEPILOT_old,Trading Mechanisms for Trade Management on the Moscow Exchange,private,false,2026-09-22T20:28:31Z,2026-09-24T06:55:48Z,true
-1124795931,LIN-Core,ForestTiger-GH/LIN-Core,"High-performance market intelligence engine that ingests and normalizes multi-source data, runs deep analytics (levels, patterns, signals), and serves clean, ready-to-trade outputs via a simple API.",private,false,2026-09-22T20:28:31Z,2026-09-24T06:55:48Z,true
-1169024420,lincore-dock-private,ForestTiger-GH/lincore-dock-private,LIN-Core API private connector,private,false,2026-09-22T20:28:31Z,2026-09-24T06:55:48Z,true
-1341646865,MADAR,ForestTiger-GH/MADAR,"Meridian Architecture of Design, Assurance & Reliability — engineering method and executable specification",private,false,2026-09-22T20:28:31Z,2026-09-24T06:55:48Z,true
-1353779596,MADARAII,ForestTiger-GH/MADARAII,Pilot release of MADAR autonomous interactive instructions,private,false,2026-09-22T20:28:31Z,2026-09-24T06:55:48Z,true
-1364938978,madaraii-pilot,ForestTiger-GH/madaraii-pilot,Pilot testing of an AI-agent operating according to MADARAII engineering cyclic work,public,false,2026-09-22T20:28:31Z,2026-09-24T06:55:48Z,true
-1365000063,madaraii-pilot-2,ForestTiger-GH/madaraii-pilot-2,Pilot testing of an AI-agent operating according to MADARAII engineering cyclic work,public,false,2026-09-22T20:28:31Z,2026-09-24T06:55:48Z,true
-1365033294,madaraii-pilot-3,ForestTiger-GH/madaraii-pilot-3,Pilot testing of an AI-agent operating according to MADARAII engineering cyclic work,public,false,2026-09-22T20:28:31Z,2026-09-24T06:55:48Z,true
-1374262898,madaraii-pilot-4,ForestTiger-GH/madaraii-pilot-4,Pilot testing of an AI-agent operating according to MADARAII engineering cyclic work,public,false,2026-09-22T20:28:31Z,2026-09-24T06:55:48Z,true
-1368735394,mandat-analytics,ForestTiger-GH/mandat-analytics,Cognitive logic for analytic work,private,false,2026-09-22T20:28:31Z,2026-09-24T06:55:48Z,true
-1382410031,mandat-communication,ForestTiger-GH/mandat-communication,Cognitive logic for autonomous communication,private,false,2026-09-23T06:57:33Z,2026-09-24T06:55:48Z,true
-1380517906,mandat-forecast,ForestTiger-GH/mandat-forecast,Cognitive logic for forecasting work,private,false,2026-09-22T20:28:31Z,2026-09-24T06:55:48Z,true
-1384350423,mandat-programming,ForestTiger-GH/mandat-programming,,private,false,2026-09-24T06:55:48Z,2026-09-24T06:55:48Z,true
-1382422717,newsflow,ForestTiger-GH/newsflow,Automated external data gateway,public,false,2026-09-23T06:57:33Z,2026-09-24T06:55:48Z,true
-1370061357,PROTOS,ForestTiger-GH/PROTOS,Fundamental AI architecture & infrastructure,private,false,2026-09-22T20:28:31Z,2026-09-24T06:55:48Z,true
-1144531837,stratbox,ForestTiger-GH/stratbox,Toolbox that standardizes data and file storage access via pluggable providers for business needs,public,false,2026-09-22T20:28:31Z,2026-09-24T06:55:48Z,true
-1279514466,stratbox-windows,ForestTiger-GH/stratbox-windows,Desktop stratbox-application via AppDock for macroeconomic and banking data work ,public,false,2026-09-22T20:28:31Z,2026-09-24T06:55:48Z,true
-1375017353,tabularium,ForestTiger-GH/tabularium,Machine-readable public financial and statistical disclosures,public,false,2026-09-22T20:28:31Z,2026-09-24T06:55:48Z,true
+1371796532,analytics,ForestTiger-GH/analytics,Space for everyday work,private,false,2026-09-22T20:28:31Z,2026-09-25T06:50:11Z,true
+1252551768,AppDock,ForestTiger-GH/AppDock,"End-to-end platform for packaging, productizing, deploying, running and remotely operating applications across platforms, repositories and nodes — with hosting, publication, control planes, secure connectivity, MCP/A2A and extensible interoperability",private,false,2026-09-22T20:28:31Z,2026-09-25T06:50:11Z,true
+1169689579,Compass,ForestTiger-GH/Compass,"Trade engine for the declarative description, compilation, execution, analysis, and explainable implementation of trading strategies",private,false,2026-09-22T20:28:31Z,2026-09-25T06:50:11Z,true
+344921764,COTRA,ForestTiger-GH/COTRA,CFTC Commitments of Traders Reports Analysis,public,false,2026-09-22T20:28:31Z,2026-09-25T06:50:11Z,true
+1016958961,fin-business,ForestTiger-GH/fin-business,,public,false,2026-09-22T20:28:31Z,2026-09-25T06:50:11Z,true
+347684425,Finance-Board,ForestTiger-GH/Finance-Board,,public,true,2026-09-22T20:28:31Z,2026-09-25T06:50:11Z,true
+1381835317,github-observatory,ForestTiger-GH/github-observatory,Daily monitoring of GitHub repositories,public,false,2026-09-22T20:28:31Z,2026-09-25T06:50:11Z,true
+1169689333,Lepilot,ForestTiger-GH/Lepilot,"Automated Capital Management System via AppDock based on Compass-engine, LIN-Core-data and bank&broker services ",private,false,2026-09-22T20:28:31Z,2026-09-25T06:50:11Z,true
+990158962,LEPILOT_old,ForestTiger-GH/LEPILOT_old,Trading Mechanisms for Trade Management on the Moscow Exchange,private,false,2026-09-22T20:28:31Z,2026-09-25T06:50:11Z,true
+1124795931,LIN-Core,ForestTiger-GH/LIN-Core,"High-performance market intelligence engine that ingests and normalizes multi-source data, runs deep analytics (levels, patterns, signals), and serves clean, ready-to-trade outputs via a simple API.",private,false,2026-09-22T20:28:31Z,2026-09-25T06:50:11Z,true
+1169024420,lincore-dock-private,ForestTiger-GH/lincore-dock-private,LIN-Core API private connector,private,false,2026-09-22T20:28:31Z,2026-09-25T06:50:11Z,true
+1341646865,MADAR,ForestTiger-GH/MADAR,"Meridian Architecture of Design, Assurance & Reliability — engineering method and executable specification",private,false,2026-09-22T20:28:31Z,2026-09-25T06:50:11Z,true
+1353779596,MADARAII,ForestTiger-GH/MADARAII,Pilot release of MADAR autonomous interactive instructions,private,false,2026-09-22T20:28:31Z,2026-09-25T06:50:11Z,true
+1364938978,madaraii-pilot,ForestTiger-GH/madaraii-pilot,Pilot testing of an AI-agent operating according to MADARAII engineering cyclic work,public,false,2026-09-22T20:28:31Z,2026-09-25T06:50:11Z,true
+1365000063,madaraii-pilot-2,ForestTiger-GH/madaraii-pilot-2,Pilot testing of an AI-agent operating according to MADARAII engineering cyclic work,public,false,2026-09-22T20:28:31Z,2026-09-25T06:50:11Z,true
+1365033294,madaraii-pilot-3,ForestTiger-GH/madaraii-pilot-3,Pilot testing of an AI-agent operating according to MADARAII engineering cyclic work,public,false,2026-09-22T20:28:31Z,2026-09-25T06:50:11Z,true
+1374262898,madaraii-pilot-4,ForestTiger-GH/madaraii-pilot-4,Pilot testing of an AI-agent operating according to MADARAII engineering cyclic work,public,false,2026-09-22T20:28:31Z,2026-09-25T06:50:11Z,true
+1368735394,mandat-analytics,ForestTiger-GH/mandat-analytics,Cognitive logic for analytic work,private,false,2026-09-22T20:28:31Z,2026-09-25T06:50:11Z,true
+1382410031,mandat-communication,ForestTiger-GH/mandat-communication,Cognitive logic for autonomous communication,private,false,2026-09-23T06:57:33Z,2026-09-25T06:50:11Z,true
+1380517906,mandat-forecast,ForestTiger-GH/mandat-forecast,Cognitive logic for forecasting work,private,false,2026-09-22T20:28:31Z,2026-09-25T06:50:11Z,true
+1384350423,mandat-programming,ForestTiger-GH/mandat-programming,,private,false,2026-09-24T06:55:48Z,2026-09-25T06:50:11Z,true
+1382422717,newsflow,ForestTiger-GH/newsflow,Automated external data gateway,public,false,2026-09-23T06:57:33Z,2026-09-25T06:50:11Z,true
+1370061357,PROTOS,ForestTiger-GH/PROTOS,Fundamental AI architecture & infrastructure,private,false,2026-09-22T20:28:31Z,2026-09-25T06:50:11Z,true
+1144531837,stratbox,ForestTiger-GH/stratbox,Toolbox that standardizes data and file storage access via pluggable providers for business needs,public,false,2026-09-22T20:28:31Z,2026-09-25T06:50:11Z,true
+1279514466,stratbox-windows,ForestTiger-GH/stratbox-windows,Desktop stratbox-application via AppDock for macroeconomic and banking data work ,public,false,2026-09-22T20:28:31Z,2026-09-25T06:50:11Z,true
+1375017353,tabularium,ForestTiger-GH/tabularium,Machine-readable public financial and statistical disclosures,public,false,2026-09-22T20:28:31Z,2026-09-25T06:50:11Z,true
