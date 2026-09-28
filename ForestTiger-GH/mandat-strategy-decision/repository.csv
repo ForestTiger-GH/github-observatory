@@ -1,0 +1,2 @@
+data_date_utc,observed_at,repository_id,name,full_name,description,visibility,archived,fork,created_at,updated_at,pushed_at,size_kb,files,files_status,commits,stars,forks,subscribers
+2026-09-27,2026-09-28T07:56:25Z,1391331793,mandat-strategy-decision,ForestTiger-GH/mandat-strategy-decision,,private,false,false,2026-09-27T19:30:24Z,2026-09-27T23:37:29Z,2026-09-27T23:37:25Z,625,25,exact,19,0,0,0

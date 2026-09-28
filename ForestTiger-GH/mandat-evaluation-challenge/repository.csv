@@ -1,0 +1,2 @@
+data_date_utc,observed_at,repository_id,name,full_name,description,visibility,archived,fork,created_at,updated_at,pushed_at,size_kb,files,files_status,commits,stars,forks,subscribers
+2026-09-27,2026-09-28T07:56:25Z,1391332301,mandat-evaluation-challenge,ForestTiger-GH/mandat-evaluation-challenge,,private,false,false,2026-09-27T19:31:02Z,2026-09-27T23:36:45Z,2026-09-27T23:36:41Z,628,26,exact,20,0,0,0
