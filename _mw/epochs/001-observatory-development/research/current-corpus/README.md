@@ -24,6 +24,7 @@ This directory contains bounded current-state studies of GitHub Observatory perf
 | --- | --- | --- | --- |
 | [00 — Current-State Coverage Discovery](./00_Current_State_Coverage_Discovery_2026-09-30.md) | MADARAII-05 | COMPLETE | Bounds the current mechanism surface and qualifies bounded studies. |
 | [01 — Product Identity, Boundaries and Owner Topology](./01_Product_Identity_Boundaries_and_Owner_Topology_2026-09-30.md) | MADARAII-06 | COMPLETE | Establishes current Product/Work boundaries, owner routes and reliance distinctions. |
+| [02 — Repository Discovery, Identity and Registry Lifecycle](./02_Repository_Discovery_Identity_and_Registry_Lifecycle_2026-09-30.md) | MADARAII-06 | COMPLETE | Reconstructs automatic owner-repository discovery, stable identity, presence and rename lifecycle. |
 
 ## Status vocabulary
 
