@@ -43,11 +43,19 @@ Shared Product cutoff for the first wave: repository Product surfaces and genera
 
 ## Fan-in posture
 
-No MADARAII-15 Work is currently marked executable. It becomes justified only after enough `CS-*` contributions are `DONE` to form a coherent consumer-fit current mechanism model and an embedded Current HOW assembly contract can be bound without claiming Product or maintained-Knowledge admission. Any such fan-in remains a Research Result under this Commission.
+**COMPLETE AS RESEARCH-ONLY CURRENT HOW CANDIDATE.**
+
+All bounded studies CS-01..CS-13 are DONE. The fan-in is established at:
+
+[current-corpus/14_Current_HOW_Research_Synthesis_2026-09-30.md](./current-corpus/14_Current_HOW_Research_Synthesis_2026-09-30.md)
+
+The synthesis is not admitted as Product truth or maintained Knowledge. Root Product owners remain authoritative. The current-state research cycle is complete; Development Epoch 001 remains active.
 
 ## Current priority / next eligible Work
 
-Initial execution order follows semantic dependency rather than file order:
+No bounded study from this cycle remains OPEN. Re-entry is trigger-based: reopen only an affected slice when its recorded invalidation condition is met, or run new Coverage Discovery if a genuinely new mechanism/consumer/lifecycle appears outside the current map.
+
+Completed dependency order was:
 
 ```text
 CS-01
