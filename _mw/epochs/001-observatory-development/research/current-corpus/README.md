@@ -32,6 +32,7 @@ This directory contains bounded current-state studies of GitHub Observatory perf
 | [07 — Collector Orchestration, Failure Isolation and Terminal Status](./07_Collector_Orchestration_Failure_Isolation_and_Terminal_Status_2026-09-30.md) | MADARAII-06 | COMPLETE | Reconstructs source-family isolation, retries, partial success, status semantics and process exit behavior. |
 | [08 — Scheduled Collection: Declared Cron vs Actual Actions Operation](./08_Scheduled_Collection_Declared_Cron_vs_Actual_Actions_Operation_2026-09-30.md) | MADARAII-06 | COMPLETE | Establishes persistent schedule-event delay, collector timing, default-branch execution and push boundary. |
 | [09 — Backfill, Rerun and Replacement Semantics](./09_Backfill_Rerun_and_Replacement_Semantics_2026-09-30.md) | MADARAII-06 | COMPLETE | Reconstructs bounded historical recovery, replacement-idempotence, attempt retention and mixed-mode status collision. |
+| [10 — Current Data Corpus, Missing/Zero and Integrity Posture](./10_Current_Data_Corpus_Missing_Zero_and_Integrity_Posture_2026-09-30.md) | MADARAII-06 | COMPLETE | Audits current generated topology, status/freshness, missing-vs-zero semantics and cross-family integrity limits. |
 
 ## Status vocabulary
 
