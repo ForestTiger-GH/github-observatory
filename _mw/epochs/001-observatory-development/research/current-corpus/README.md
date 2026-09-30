@@ -29,6 +29,7 @@ This directory contains bounded current-state studies of GitHub Observatory perf
 | [04 — Repository Snapshots, File Counts and Languages](./04_Repository_Snapshots_File_Counts_and_Languages_2026-09-30.md) | MADARAII-06 | COMPLETE | Reconstructs repository metadata, exact/UNKNOWN file counts, language partitions and backfill limits. |
 | [05 — Canonical Activity Reconstruction and Historical Mutability](./05_Canonical_Activity_Reconstruction_and_Historical_Mutability_2026-09-30.md) | MADARAII-06 | COMPLETE | Reconstructs default-ref activity projection, sparse days, changed-file UNKNOWN and historical revisability. |
 | [06 — Traffic Semantics, Rolling Windows and Visibility Boundary](./06_Traffic_Semantics_Rolling_Windows_and_Visibility_Boundary_2026-09-30.md) | MADARAII-06 | COMPLETE | Reconstructs daily Traffic retention, rolling top tables, API-window limits and public/private detail boundary. |
+| [07 — Collector Orchestration, Failure Isolation and Terminal Status](./07_Collector_Orchestration_Failure_Isolation_and_Terminal_Status_2026-09-30.md) | MADARAII-06 | COMPLETE | Reconstructs source-family isolation, retries, partial success, status semantics and process exit behavior. |
 
 ## Status vocabulary
 
