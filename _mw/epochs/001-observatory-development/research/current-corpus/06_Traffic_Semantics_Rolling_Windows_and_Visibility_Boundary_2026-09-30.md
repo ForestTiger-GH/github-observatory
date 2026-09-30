@@ -239,6 +239,38 @@ At the latest Product-baseline run:
 
 Thus failure semantics above are code/documented current mechanisms, not presently observed failures in the latest run.
 
+## Important observed source-window contradiction
+
+After this Study was first closed, corpus-wide inspection found a material counterexample to treating the documented 14-day window as an exact observed bound.
+
+`AppDock/traffic/views.csv` contains:
+
+```text
+traffic_date_utc=2026-08-31
+last_observed_at=2026-09-22T20:28:31Z
+```
+
+and continuous rows from that date forward. The `last_observed_at` equals the first observed backfill execution, so this early row was supplied/refreshed during that backfill rather than merely surviving with an older Observatory timestamp.
+
+August 31 to September 22 exceeds the currently documented “last 14 days” surface.
+
+Therefore the evidence must remain split:
+
+```text
+GitHub current documentation:
+views/clones daily breakdown for last 14 days
+
+Observed Observatory source response at 2026-09-22:
+at least one repository yielded a longer dated series
+
+Exact reason:
+UNKNOWN
+```
+
+Possible explanations such as platform behavior changing over time, documentation lag, account-specific source behavior or another undocumented rule are not established by current evidence.
+
+Accordingly, **14 days is the current documented source contract, not a safe empirical hard bound for every historical response already preserved by Observatory**.
+
 ## Facet reconciliation
 
 ### Accepted/documented
@@ -264,7 +296,7 @@ The generated tree and latest statuses exactly exhibit the public/private family
 
 ## UNKNOWN / limits
 
-- GitHub's hidden aggregation/update mechanics beyond documented behavior are outside Observatory.
+- GitHub's hidden aggregation/update mechanics beyond documented behavior are outside Observatory; preserved AppDock evidence materially exceeds the current documented 14-day window, and the reason is UNKNOWN.
 - Older persisted daily Traffic cannot be independently re-queried after it leaves GitHub's window.
 - The current corpus has not exercised the 403/404 branches in the latest runs, so recovery from those states is implementation-established rather than observed.
 - Exact semantics of GitHub `uniques` are source-defined and not independently validated by Observatory.
@@ -273,7 +305,7 @@ The generated tree and latest statuses exactly exhibit the public/private family
 
 ```text
 authorized Traffic access
-→ daily views + clones (last-14-day upstream window)
+→ daily views + clones (currently documented as a last-14-day upstream window; preserved evidence includes a longer historical response)
 → admit only closed UTC days
 → refresh while source still returns them
 → retain older daily history locally
