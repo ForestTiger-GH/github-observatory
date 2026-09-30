@@ -35,6 +35,7 @@ This directory contains bounded current-state studies of GitHub Observatory perf
 | [10 — Current Data Corpus, Missing/Zero and Integrity Posture](./10_Current_Data_Corpus_Missing_Zero_and_Integrity_Posture_2026-09-30.md) | MADARAII-06 | COMPLETE | Audits current generated topology, status/freshness, missing-vs-zero semantics and cross-family integrity limits. |
 | [11 — Reliability, Recovery, API Economics and Scaling Envelope](./11_Reliability_Recovery_API_Economics_and_Scaling_Envelope_2026-09-30.md) | MADARAII-06 | COMPLETE | Reconstructs current request geometry, runtime headroom, failure recovery, rate-limit handling and scaling cost curves. |
 | [12 — Security, Privacy and Access Boundary](./12_Security_Privacy_and_Access_Boundary_2026-09-30.md) | MADARAII-06 | COMPLETE | Reconstructs public/private exposure, content minimization, Traffic-detail suppression and credential/write authority boundaries. |
+| [13 — Consumer Routes, Documentation and Current-State Reconciliation](./13_Consumer_Routes_Documentation_and_Current_State_Reconciliation_2026-09-30.md) | MADARAII-06 | COMPLETE | Reconciles owner docs, implementation, observed operation and prior Research; defines the safe cold-consumer path. |
 
 ## Status vocabulary
 
