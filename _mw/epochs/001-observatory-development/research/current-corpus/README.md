@@ -27,6 +27,7 @@ This directory contains bounded current-state studies of GitHub Observatory perf
 | [02 — Repository Discovery, Identity and Registry Lifecycle](./02_Repository_Discovery_Identity_and_Registry_Lifecycle_2026-09-30.md) | MADARAII-06 | COMPLETE | Reconstructs automatic owner-repository discovery, stable identity, presence and rename lifecycle. |
 | [03 — Current Temporal Semantics, Attribution and Freshness](./03_Current_Temporal_Semantics_Attribution_and_Freshness_2026-09-30.md) | MADARAII-06 | COMPLETE | Establishes current closed-day attribution, event-date, observation-time and rolling-snapshot semantics. |
 | [04 — Repository Snapshots, File Counts and Languages](./04_Repository_Snapshots_File_Counts_and_Languages_2026-09-30.md) | MADARAII-06 | COMPLETE | Reconstructs repository metadata, exact/UNKNOWN file counts, language partitions and backfill limits. |
+| [05 — Canonical Activity Reconstruction and Historical Mutability](./05_Canonical_Activity_Reconstruction_and_Historical_Mutability_2026-09-30.md) | MADARAII-06 | COMPLETE | Reconstructs default-ref activity projection, sparse days, changed-file UNKNOWN and historical revisability. |
 
 ## Status vocabulary
 
