@@ -36,6 +36,7 @@ This directory contains bounded current-state studies of GitHub Observatory perf
 | [11 — Reliability, Recovery, API Economics and Scaling Envelope](./11_Reliability_Recovery_API_Economics_and_Scaling_Envelope_2026-09-30.md) | MADARAII-06 | COMPLETE | Reconstructs current request geometry, runtime headroom, failure recovery, rate-limit handling and scaling cost curves. |
 | [12 — Security, Privacy and Access Boundary](./12_Security_Privacy_and_Access_Boundary_2026-09-30.md) | MADARAII-06 | COMPLETE | Reconstructs public/private exposure, content minimization, Traffic-detail suppression and credential/write authority boundaries. |
 | [13 — Consumer Routes, Documentation and Current-State Reconciliation](./13_Consumer_Routes_Documentation_and_Current_State_Reconciliation_2026-09-30.md) | MADARAII-06 | COMPLETE | Reconciles owner docs, implementation, observed operation and prior Research; defines the safe cold-consumer path. |
+| [14 — Current HOW Research Synthesis](./14_Current_HOW_Research_Synthesis_2026-09-30.md) | MADARAII-15 | COMPLETE / NOT ADMITTED | Reconciles all bounded contributions into one cold-entry Current HOW candidate without changing Product owners. |
 
 ## Status vocabulary
 
@@ -50,3 +51,17 @@ For each completed bounded study:
 3. update `../AGENDA.md` with status, exact Result locator, residue and reopen triggers.
 
 If a study becomes stale before completion, preserve the stale baseline and re-enter from current owners rather than silently rewriting history.
+
+
+## Cycle posture
+
+The commissioned 2026-09-30 **current-state research cycle is complete** for its declared coverage contract:
+
+- Coverage Discovery: complete.
+- Bounded studies CS-01..CS-13: complete.
+- Research-only Current HOW fan-in: complete.
+- Product owner mutation: not performed.
+- Maintained Knowledge admission: not performed.
+- Development Epoch 001: remains active; this cycle does not close the epoch.
+
+Ordinary cold re-entry for this research contour should now start with [14 — Current HOW Research Synthesis](./14_Current_HOW_Research_Synthesis_2026-09-30.md), then use the bounded studies as the challenge/provenance route and root Product owners for authoritative current semantics.
