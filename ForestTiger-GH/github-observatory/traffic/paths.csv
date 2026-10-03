@@ -89,3 +89,13 @@ data_date_utc,observed_at,path,title,count,uniques
 2026-10-01,2026-10-02T07:43:33Z,/ForestTiger-GH/github-observatory/tree/main/_mw,/tree/main/_mw,6,1
 2026-10-01,2026-10-02T07:43:33Z,/ForestTiger-GH/github-observatory/tree/main/_mw/epochs/001-observatory-development,/tree/main/_mw/epochs/001-observatory-development,7,1
 2026-10-01,2026-10-02T07:43:33Z,/ForestTiger-GH/github-observatory/tree/main/_mw/epochs/001-observatory-development/research,/tree/main/_mw/epochs/001-observatory-development/research,8,1
+2026-10-02,2026-10-03T07:17:00Z,/ForestTiger-GH/github-observatory,Overview,39,3
+2026-10-02,2026-10-03T07:17:00Z,/ForestTiger-GH/github-observatory/tree/main,/tree/main,17,1
+2026-10-02,2026-10-03T07:17:00Z,/ForestTiger-GH/github-observatory/tree/main/ForestTiger-GH,/tree/main/ForestTiger-GH,37,1
+2026-10-02,2026-10-03T07:17:00Z,/ForestTiger-GH/github-observatory/tree/main/ForestTiger-GH/PROTOS,/tree/main/ForestTiger-GH/PROTOS,8,1
+2026-10-02,2026-10-03T07:17:00Z,/ForestTiger-GH/github-observatory/tree/main/ForestTiger-GH/_collection,/tree/main/ForestTiger-GH/_collection,12,1
+2026-10-02,2026-10-03T07:17:00Z,/ForestTiger-GH/github-observatory/tree/main/ForestTiger-GH/tabularium,/tree/main/ForestTiger-GH/tabularium,11,1
+2026-10-02,2026-10-03T07:17:00Z,/ForestTiger-GH/github-observatory/tree/main/ForestTiger-GH/tabularium/traffic,/tree/main/ForestTiger-GH/tabularium/traffic,9,1
+2026-10-02,2026-10-03T07:17:00Z,/ForestTiger-GH/github-observatory/tree/main/_mw,/tree/main/_mw,6,1
+2026-10-02,2026-10-03T07:17:00Z,/ForestTiger-GH/github-observatory/tree/main/_mw/epochs/001-observatory-development,/tree/main/_mw/epochs/001-observatory-development,7,1
+2026-10-02,2026-10-03T07:17:00Z,/ForestTiger-GH/github-observatory/tree/main/_mw/epochs/001-observatory-development/research,/tree/main/_mw/epochs/001-observatory-development/research,8,1
