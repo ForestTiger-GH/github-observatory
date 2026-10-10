@@ -159,3 +159,13 @@ data_date_utc,observed_at,path,title,count,uniques
 2026-10-08,2026-10-09T08:09:18Z,/ForestTiger-GH/github-observatory/tree/main/_mw/epochs/001-observatory-development,/tree/main/_mw/epochs/001-observatory-development,3,1
 2026-10-08,2026-10-09T08:09:18Z,/ForestTiger-GH/github-observatory/tree/main/_mw/epochs/001-observatory-development/research,/tree/main/_mw/epochs/001-observatory-development/research,3,1
 2026-10-08,2026-10-09T08:09:18Z,/ForestTiger-GH/github-observatory/tree/main/scripts,/tree/main/scripts,3,1
+2026-10-09,2026-10-10T07:53:40Z,/ForestTiger-GH/github-observatory,Overview,6,2
+2026-10-09,2026-10-10T07:53:40Z,/ForestTiger-GH/github-observatory/blob/main/.github/workflows/collect.yml,/blob/main/.github/workflows/collect.yml,1,1
+2026-10-09,2026-10-10T07:53:40Z,/ForestTiger-GH/github-observatory/blob/main/scripts/collect.py,/blob/main/scripts/collect.py,1,1
+2026-10-09,2026-10-10T07:53:40Z,/ForestTiger-GH/github-observatory/blob/main/scripts/observatory.py,/blob/main/scripts/observatory.py,1,1
+2026-10-09,2026-10-10T07:53:40Z,/ForestTiger-GH/github-observatory/tree/main,/tree/main,4,1
+2026-10-09,2026-10-10T07:53:40Z,/ForestTiger-GH/github-observatory/tree/main/.github/workflows,/tree/main/.github/workflows,1,1
+2026-10-09,2026-10-10T07:53:40Z,/ForestTiger-GH/github-observatory/tree/main/ForestTiger-GH,/tree/main/ForestTiger-GH,1,1
+2026-10-09,2026-10-10T07:53:40Z,/ForestTiger-GH/github-observatory/tree/main/_mw/epochs/001-observatory-development,/tree/main/_mw/epochs/001-observatory-development,3,1
+2026-10-09,2026-10-10T07:53:40Z,/ForestTiger-GH/github-observatory/tree/main/_mw/epochs/001-observatory-development/research,/tree/main/_mw/epochs/001-observatory-development/research,3,1
+2026-10-09,2026-10-10T07:53:40Z,/ForestTiger-GH/github-observatory/tree/main/scripts,/tree/main/scripts,3,1

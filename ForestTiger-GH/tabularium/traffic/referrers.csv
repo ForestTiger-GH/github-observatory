@@ -40,3 +40,7 @@ data_date_utc,observed_at,referrer,count,uniques
 2026-10-08,2026-10-09T08:09:18Z,ethic.expert,1,1
 2026-10-08,2026-10-09T08:09:18Z,github.com,37,4
 2026-10-08,2026-10-09T08:09:18Z,nautilus.jet.su,3,3
+2026-10-09,2026-10-10T07:53:40Z,chatgpt.com,5,3
+2026-10-09,2026-10-10T07:53:40Z,ethic.expert,1,1
+2026-10-09,2026-10-10T07:53:40Z,github.com,36,4
+2026-10-09,2026-10-10T07:53:40Z,nautilus.jet.su,3,3

@@ -124,3 +124,13 @@ data_date_utc,observed_at,path,title,count,uniques
 2026-10-08,2026-10-09T08:09:18Z,/ForestTiger-GH/madaraii-pilot-3/blob/main/src/MiniDoc/Docx/DocxFlowWriter.Table.cs,/blob/main/src/MiniDoc/Docx/DocxFlowWriter.Table.cs,1,1
 2026-10-08,2026-10-09T08:09:18Z,/ForestTiger-GH/madaraii-pilot-3/blob/main/src/MiniDoc/Docx/DocxFlowWriter.cs,/blob/main/src/MiniDoc/Docx/DocxFlowWriter.cs,1,1
 2026-10-08,2026-10-09T08:09:18Z,/ForestTiger-GH/madaraii-pilot-3/blob/main/src/MiniDoc/Docx/DocxTableCompatibility.cs,/blob/main/src/MiniDoc/Docx/DocxTableCompatibility.cs,1,1
+2026-10-09,2026-10-10T07:53:40Z,/ForestTiger-GH/madaraii-pilot-3,Overview,2,1
+2026-10-09,2026-10-10T07:53:40Z,/ForestTiger-GH/madaraii-pilot-3/blob/main/_mw/architecture/WORK-ARCHITECTURE.md,/blob/main/_mw/architecture/WORK-ARCHITECTURE.md,1,1
+2026-10-09,2026-10-10T07:53:40Z,/ForestTiger-GH/madaraii-pilot-3/blob/main/_mw/epochs/001-jester-finalization/inbox/archive/INBOX-0001.md,/blob/main/_mw/epochs/001-jester-finalization/inbox/archive/INBOX-0001.md,1,1
+2026-10-09,2026-10-10T07:53:40Z,/ForestTiger-GH/madaraii-pilot-3/blob/main/scripts/build.ps1,/blob/main/scripts/build.ps1,1,1
+2026-10-09,2026-10-10T07:53:40Z,/ForestTiger-GH/madaraii-pilot-3/blob/main/scripts/verify-windows.ps1,/blob/main/scripts/verify-windows.ps1,1,1
+2026-10-09,2026-10-10T07:53:40Z,/ForestTiger-GH/madaraii-pilot-3/blob/main/src/MiniDoc/Docx/DocxCompatibility.cs,/blob/main/src/MiniDoc/Docx/DocxCompatibility.cs,1,1
+2026-10-09,2026-10-10T07:53:40Z,/ForestTiger-GH/madaraii-pilot-3/blob/main/src/MiniDoc/Docx/DocxFlowWriter.Formatting.cs,/blob/main/src/MiniDoc/Docx/DocxFlowWriter.Formatting.cs,1,1
+2026-10-09,2026-10-10T07:53:40Z,/ForestTiger-GH/madaraii-pilot-3/blob/main/src/MiniDoc/Docx/DocxFlowWriter.Table.cs,/blob/main/src/MiniDoc/Docx/DocxFlowWriter.Table.cs,1,1
+2026-10-09,2026-10-10T07:53:40Z,/ForestTiger-GH/madaraii-pilot-3/blob/main/src/MiniDoc/Docx/DocxFlowWriter.cs,/blob/main/src/MiniDoc/Docx/DocxFlowWriter.cs,1,1
+2026-10-09,2026-10-10T07:53:40Z,/ForestTiger-GH/madaraii-pilot-3/blob/main/src/MiniDoc/Docx/DocxTableCompatibility.cs,/blob/main/src/MiniDoc/Docx/DocxTableCompatibility.cs,1,1
