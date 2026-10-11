@@ -44,3 +44,8 @@ data_date_utc,observed_at,referrer,count,uniques
 2026-10-09,2026-10-10T07:53:40Z,ethic.expert,1,1
 2026-10-09,2026-10-10T07:53:40Z,github.com,36,4
 2026-10-09,2026-10-10T07:53:40Z,nautilus.jet.su,3,3
+2026-10-10,2026-10-11T08:00:25Z,chatgpt.com,5,3
+2026-10-10,2026-10-11T08:00:25Z,ethic.expert,1,1
+2026-10-10,2026-10-11T08:00:25Z,github.com,28,4
+2026-10-10,2026-10-11T08:00:25Z,nautilus.jet.su,3,3
+2026-10-10,2026-10-11T08:00:25Z,perplexity.ai,1,1
