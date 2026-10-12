@@ -1,0 +1,2 @@
+data_date_utc,observed_at,repository_id,name,full_name,description,visibility,archived,fork,created_at,updated_at,pushed_at,size_kb,files,files_status,commits,stars,forks,subscribers
+2026-10-11,2026-10-12T08:16:17Z,1414868554,cyberseclex,ForestTiger-GH/cyberseclex,Cybersecurity engineering under adversarial assumptions,private,false,false,2026-10-11T23:53:38Z,2026-10-12T08:14:06Z,2026-10-12T08:14:02Z,1671,65,exact,75,0,0,0
