@@ -23,3 +23,4 @@ data_date_utc,observed_at,repository_id,name,full_name,description,visibility,ar
 2026-10-13,2026-10-14T06:53:31Z,1382422717,newsflow,ForestTiger-GH/newsflow,Automated external data gateway,public,false,false,2026-09-22T22:26:18Z,2026-09-27T00:22:39Z,2026-09-27T00:22:36Z,167,12,exact,10,0,0,0
 2026-10-14,2026-10-15T06:42:32Z,1382422717,newsflow,ForestTiger-GH/newsflow,Automated external data gateway,public,false,false,2026-09-22T22:26:18Z,2026-09-27T00:22:39Z,2026-09-27T00:22:36Z,167,12,exact,10,0,0,0
 2026-10-15,2026-10-16T06:33:26Z,1382422717,newsflow,ForestTiger-GH/newsflow,Automated external data gateway,public,false,false,2026-09-22T22:26:18Z,2026-09-27T00:22:39Z,2026-09-27T00:22:36Z,167,12,exact,10,0,0,0
+2026-10-16,2026-10-17T06:23:01Z,1382422717,newsflow,ForestTiger-GH/newsflow,Automated external data gateway,public,false,false,2026-09-22T22:26:18Z,2026-09-27T00:22:39Z,2026-09-27T00:22:36Z,167,12,exact,10,0,0,0
