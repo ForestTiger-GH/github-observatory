@@ -1,17 +1,17 @@
 # Git-Based AI Development Token and API-Equivalent Cost Ceiling
 
 **Date:** 2026-11-15  
-**Status:** Research result; proposed analytical method, not adopted collection behavior  
-**Subject:** Estimate a deliberately high, reproducible API-equivalent token and USD envelope for AI-assisted development from canonical Git activity without pretending that Git records actual model usage.
+**Status:** Revised research result; change-volume method preferred, commit-only model retained as fallback; no collector implementation adopted  
+**Subject:** Estimate an explicitly conditional Sol-family token and API-equivalent USD envelope primarily from Git added/deleted text volume, with commits used only as workload overhead and fallback.
 
 ## Main conclusions and decision
 
 1. **Git history is usable as an output-activity proxy, not a token meter.** An AI-created commit does not disclose the number of model calls, prompt tokens, reasoning tokens, discarded attempts, file reads, subagents, or retries that produced it.
 2. **There is no finite, empirically defensible absolute upper bound on token consumption from a commit count alone.** Arbitrarily many unsuccessful calls may precede one commit, and work may consume tokens without producing a commit. A useful ceiling is therefore **conditional on explicit limits assigned by the analyst**, never a claimed measurement or a mathematical upper bound on actual ChatGPT activity.
-3. **For a single conservative planning headline, use the declared high-envelope scenario described below:** four equivalent model calls per canonical commit; 300,000 uncached input tokens and 80,000 output tokens per call; the published long-context API rates for the Sol model family. As of 2026-11-15 this is **1.52 million hypothetical tokens and USD 9.60 per commit**. These inputs are intentionally aggressive scenario controls, not observed averages and not a claim that every commit actually crosses the long-context threshold.
+3. **Use tokenized change volume as the primary observable activity proxy:** compare added and removed lines, measure changed-text characters, and tokenize exact added/deleted text where recoverable. The prior **1.52M hypothetical tokens and $9.60 per commit** is retained as a coarse fallback only: it can understate a large research module and overstate a trivial edit.
 4. **Maximum reasoning effort affects the number of reasoning tokens, not the model's quoted per-token tariff.** Reasoning is part of billed output. Chat GPT-6 Sol at High and Work GPT-6.1 Sol at Max should be mapped to their respective API model IDs for counterfactual valuation, not to a nonexistent special “Max price.” [S1][S2][S3]
-5. **One USD figure may be presented only with its exact envelope definition:** “Sol-family API-equivalent stress ceiling under declared assumptions,” not “actual API bill,” “OpenAI cost,” “ChatGPT tokens spent,” or “proven maximum.”
-6. **Keep the evidence collector unchanged.** Compute this estimate in a separate derived-analysis layer using existing daily commit observations. Do not add inferred token or dollar fields to canonical observational CSVs. The collector remains an evidence collector, not a billing simulator.
+5. **One USD figure is meaningful only with its exact model, source coverage and stress-envelope assumptions:** label the tokenized change-volume method distinctly from commit-only fallback; neither measures actual subscription consumption or proves an absolute maximum.
+6. **Keep the evidence collector unchanged.** Existing daily activity data do not contain line, character or token deltas. A later separately authorized analysis may read detailed Git changes transiently, persist only permitted aggregates outside canonical observation datasets, and avoid saving diffs, paths or file contents.
 
 ## 1. Question, working assumptions, and exclusion boundary
 
@@ -96,9 +96,9 @@ A useful generic per-request equation is:
 
 Use request-specific rates p based on model, context threshold and service tier. Never add reasoning tokens again when they are already included in O_j; never add cached tokens to input if I_j already includes them. In a conventional usage structure, input total includes cached tokens, so uncached input equals input_total minus cached_input. [S3]
 
-## 4. Default maximum-effort Sol-family stress envelope
+## 4. Original commit-only Sol-family stress envelope (fallback, not preferred)
 
-This section defines **one** numerical upper-scenario calculation; lower, median and probabilistic estimates are outside the preferred headline.
+This section documents the original commit-only stress scenario as a historical baseline and fallback when detailed changed-text evidence is unavailable. The preferred approach is now Section 4A.
 
 ### 4.1 Declared parameters
 
@@ -166,11 +166,102 @@ Thus:
 - Do not add estimated artifact tokens to the K × O allowance unless a separate model-output trace confirms they are distinct; otherwise double counting is likely.
 - Do not infer reasoning volume by multiplying visible output tokens by a fixed official ratio: no such general conversion is published.
 
+## 4A. Preferred change-volume method: Git lines, characters, tokens, reasoning and cost
+
+**Research amendment, 2026-11-15.** A constant cost per commit is insensitive to the actual size of produced work. A tiny documentation correction and a new 11,000-line research module must not be assigned identical apparent output volume merely because each was one commit. The primary method must distinguish observed content volume from hypothetical hidden model consumption.
+
+### 4A.1 Observed evidence hierarchy
+
+| Level | Quantity | How obtained | What it does not show |
+| --- | --- | --- | --- |
+| E1 | Added and deleted lines | GitHub REST commit additions/deletions | Text length or model token usage |
+| E2 | Added and deleted characters | Extract changed lines from complete text patches | Model encoding or hidden processing |
+| E3 | Tokenized added and deleted text | Tokenizer applied to exact changed content | Reasoning, retries, input context |
+| E4 | Surviving net change | Compare period-start and period-end snapshots | Work spent on reverted or revised versions |
+| E5 | Modeled input/output/USD | Apply declared stress coefficients to E3, plus a small commit overhead | Actual API or ChatGPT bills |
+
+**E3 is the preferred visible-output proxy.** Direct line counts E1 are still useful to report and validate. Characters are more informative than lines but do not equal tokens. UTF-8 bytes, Unicode code points, JS string length, and model tokens are different units. OpenAI's approximately four-characters-per-token rule is for typical English text, not guaranteed for Python, JSON or Cyrillic. [S5]
+
+Compute **gross additions** cumulatively over first-parent commit deltas, not only the surviving text at period end. Gross changed text captures part of the rewrite/revision activity; net surviving text is a separate delivered-result metric. Deletions contribute to reading/rework context but are not automatically newly generated output.
+
+### 4A.2 Correct Git data acquisition and completeness
+
+1. Select distinct canonical reachable commits and their UTC committed dates. Determine a documented first-parent policy for merge commits; never count the same commit repeatedly because it was seen on multiple refs.
+2. Read per-commit GitHub REST additions/deletions and changed-file status. Use complete pagination when the commit touches more than the first 300 listed files; GitHub documents a maximum paginated coverage of 3,000 changed files per commit. [S6]
+3. For available text patches, count only text on added (+) and removed (-) diff lines, excluding diff headers, context and hunk metadata. Preserve line separators when constructing a text-to-token count.
+4. A missing patch for a large text file does **not** mean zero changed characters. It is directly observable that some large JSON additions have valid line counts but missing patch bodies. Retrieve the exact added blob at the revision, or compare both parent and child blobs transiently for modifications. If neither can be recovered completely, mark character/token volume **unknown** and preserve line evidence separately. [S6]
+5. Treat binaries, content-only moves, copied assets, generated CSV/JSON exports, vendored files, minified bundles and wholesale formatting as distinct content classes. They may produce enormous Git additions without being emitted as language-model output. Preserve both raw changes and eligible model-like text changes as separate analytical metrics.
+6. Prefer exact tokenization using a documented model-compatible encoding. If no tokenizer can be applied, allow a visibly labeled *dense stress proxy* of one token per two characters. This is a scenario assumption, **not** a proven upper bound or exact token count.
+7. Retain completeness indicators: known patch percentage, unresolved changed files, binary/asset exclusions, and classifiable added text. Unknown never becomes zero.
+8. Compute detailed diffs transiently. The canonical Observatory collector continues to avoid storing commit messages, paths, patches, content or per-commit records.
+
+### 4A.3 A single deliberately high Sol-family workload scenario
+
+Define, for any complete interval or repository group:
+
+- A = estimated token count of **eligible added text** (E3 or its explicitly labeled proxy).
+- D = estimated token count of **eligible removed text**.
+- N = AI-attributed canonical commits.
+- I = hypothetical billable input tokens across all model calls.
+- O = hypothetical billable output tokens, including hidden reasoning, retries and regenerated drafts.
+
+An aggressive but fully transparent **conditional scenario** is:
+
+    I_stress = 20 * A + 5 * D + 60,000 * N
+    O_stress =  8 * A         + 20,000 * N
+    T_stress = I_stress + O_stress
+    USD_stress = (4 * I_stress + 15 * O_stress) / 1,000,000
+
+The 20x input factor represents repeated large context reads and tool-output ingestion; 8x output represents committed visible text plus intermediate drafts and reasoning; 5x deleted text represents iterative re-reading; and small fixed N overhead allows nontrivial analysis even around tiny changes. They are **illustrative high-envelope coefficients selected for this study, not estimates observed in OpenAI telemetry and not a hard ceiling on real use**.
+
+The price conversion intentionally uses the documented long-context Standard rates for the Sol models ($4 input and $15 output per million), with zero cached input. This is an aggressive *valuation choice*; real long-context API pricing applies per request meeting the model's input-length threshold, not merely because total aggregated input over a day is large. Separate tool charges and other service tiers are excluded. [S1][S2]
+
+The single simplified formula is:
+
+    USD_stress = (200 * A + 20 * D + 540,000 * N) / 1,000,000
+
+Therefore the **principal size-sensitive term is the amount of new tokenized text**, not the commit count. The per-commit term exists only for analytical overhead. Model calls, reasoning and retries may be larger or smaller than this scenario for the same Git delta.
+
+### 4A.4 Empirical Git examples demonstrating the difference
+
+Read-only inspection of three canonical research commits on 2026-11-15 gave:
+
+| Research module | GitHub added lines | Exact added JSON-file characters at original commit | Tokens at 4 chars/token (rough) | Tokens at 2 chars/token (dense scenario) |
+| --- | ---: | ---: | ---: | ---: |
+| R09-311 | 10,283 | 622,864 | 155,716 | 311,432 |
+| R09-302 | 11,488 | 906,452 | 226,613 | 453,226 |
+| R09-315 | 11,366 | 921,441 | 230,360 | 460,721 |
+
+The R09-315 commit also added a separate Markdown document (64 lines); its characters are **not** included in the module-only comparison above. Counts are taken at the respective creation commits rather than today's edited versions. Character values refer to retrieved textual content; the token columns are **assumptions, not measured tokenization**.
+
+Under the 2-character dense proxy and the Section 4A.3 envelope, hypothetical per-module costs are approximately:
+
+- R09-311: A = 311,432, USD stress = **$62.83**;
+- R09-302: A = 453,226, USD stress = **$91.19**;
+- R09-315 module alone: A = 460,721, USD stress = **$92.68**.
+
+These are not actual costs. In particular, the amount of content that an agent assembled programmatically rather than emitted as direct model output is unknown. The exercise illustrates why a uniform $9.60/commit estimate is structurally weak as a measure of varied research output.
+
+### 4A.5 Hourly/day/group aggregates and retention boundary
+
+Canonical Observatory activity currently stores daily canonical commit counts and changed-file occurrences. **It does not store added lines, deleted lines, added characters or changed-text tokens.** Those values cannot be recovered from existing daily aggregate CSVs alone.
+
+A separately authorized derived-analysis pass would:
+
+- Inspect each canonical commit detail transiently, derive eligible A, D, lines and N and aggregate them by the **UTC Git committed timestamp**.
+- Produce daily, weekly, monthly, year-to-date, repository and group sums; an hourly chart requires temporary per-commit timestamps and must be labeled *publication-hour attribution*, not hour of actual inference.
+- Record evidence coverage, mixed file classes and price/model/scenario versions alongside the derived numbers.
+- Keep gross additions, gross deletions and surviving net material separate.
+- Preserve unknown periods and incomplete patch/token evidence without inventing zero values.
+- Persist no raw content, paths, messages, diffs, authors or per-commit data in the Observatory collector; do not alter existing schemas or launch any workflow as part of this research.
+
+**Recommended next validation:** A small, read-only pilot on one complete UTC day should measure the share of patches that GitHub omits, the gap between line totals and complete tokenized text, the impact of automated/generated assets, and whether a model-compatible tokenizer is available. Any real model-usage logs, if permissioned, must take precedence over this proxy.
+
 ## 5. Daily, hourly and portfolio aggregation
 
 ### 5.1 Authoritative daily calculation
 
-The existing Observatory evidence model provides fully closed UTC days and canonical reachable commit counts. An external estimator should read daily N(d,r), apply the fixed declared coefficient, and aggregate additively:
+The existing Observatory evidence model provides fully closed UTC days and canonical reachable commit counts. For commit-only fallback, an external estimator may read daily N(d,r), apply the fixed declared coefficient, and aggregate additively:
 
     portfolio_tokens(d) = SUM_over_repositories N(d,r) * 1,520,000
     portfolio_usd(d)    = SUM_over_repositories N(d,r) * 9.60
@@ -211,7 +302,7 @@ F(d,r) is valuable as an audit covariate but should **not** secretly multiply th
 
 Useful secondary descriptive checks are F/N when both fields are known, percent unknown changed-file counts, distributions of commits over dates, and structural discontinuities in activity. These metrics can direct future calibration but do not change the declared USD 9.60 per commit coefficient.
 
-## 6. Worked aggregation and exact reproducibility
+## 6. Worked aggregation of the original commit-only fallback
 
 For illustration, suppose a three-day activity observation contains 48, 363 and 424 canonical commits. The total is 835 commits.
 
@@ -324,7 +415,7 @@ A future implementation can be checked against:
 
 ## 11. Outcome and open questions
 
-**Outcome:** A reproducible **high Sol-family API-equivalent counterfactual** is specified using the Observatory's existing canonical commit counts, with a deliberately strict no-cache and long-context tariff choice. The per-commit multiplier is 1.52M hypothetical tokens and $9.60, and it scales linearly to time periods, repositories and portfolio groups.
+**Outcome:** Section 4A specifies the **preferred output-volume stress method** based on observed Git additions, deletions and their text-token proxies. The original flat 1.52M-token/$9.60-per-commit stress benchmark is retained only as a fallback and comparator; neither is a measured usage figure or real upper bound.
 
 **What remains unknown:** actual agent-call counts, actual token usage, hidden reasoning, cache hits, how much work was performed in Chat versus Work, any non-token charges, and whether real execution falls above or below the chosen envelope.
 
@@ -336,3 +427,5 @@ A future implementation can be checked against:
 - **[S2] GPT-6.1 Sol model pricing and Work context distinction.** Supports gpt-6.1-sol short/long API rates, 272K threshold, 128K maximum output, and the distinction between a 500K default Work context and API long-context pricing. OpenAI API model documentation: https://developers.openai.com/api/docs/models/gpt-6.1-sol
 - **[S3] Agent-model token accounting.** Supports model-call, subagent and retry accounting, with reasoning included in output and cached input included in input totals. OpenAI API Agents observability documentation: https://developers.openai.com/api/docs/guides/agents-api/observability
 - **[S4] Work/Codex usage model.** Supports the separation between ChatGPT subscription usage and purchased/API usage, GPT-6.1 Sol availability and 500K default Work context. OpenAI Help Center: https://help.openai.com/en/articles/20001275-chatgpt-work-and-codex
+- **[S5] Token counting and language variability.** Supports differences between characters, text bytes and tokens, the approximate English 4-character heuristic, and hidden reasoning billed as output. OpenAI Help Center: https://help.openai.com/en/articles/4936856-understanding-and-counting-tokens
+- **[S6] GitHub commit diff metadata and limits.** Supports per-commit additions/deletions, patch metadata, omission of binary patches and paginated file listings when more than 300 files changed. GitHub REST: https://docs.github.com/en/rest/commits/commits
