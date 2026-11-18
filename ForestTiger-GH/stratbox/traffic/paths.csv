@@ -272,3 +272,13 @@ data_date_utc,observed_at,path,title,count,uniques
 2026-11-16,2026-11-17T09:53:19Z,/ForestTiger-GH/stratbox/tree/main/src/stratbox/macrobanks,/tree/main/src/stratbox/macrobanks,5,1
 2026-11-16,2026-11-17T09:53:19Z,/ForestTiger-GH/stratbox/tree/main/src/stratbox/macrobanks/cbr_file_collector,/tree/main/src/stratbox/macrobanks/cbr_file_collector,3,1
 2026-11-16,2026-11-17T09:53:19Z,/ForestTiger-GH/stratbox/tree/main/src/stratbox/registries,/tree/main/src/stratbox/registries,3,1
+2026-11-17,2026-11-18T09:27:52Z,/ForestTiger-GH/stratbox,Overview,21,1
+2026-11-17,2026-11-18T09:27:52Z,/ForestTiger-GH/stratbox/blob/main/src/stratbox/macrobanks/cbr_file_collector/registry.py,/blob/main/src/stratbox/macrobanks/cbr_file_collector/registry.py,6,1
+2026-11-17,2026-11-18T09:27:52Z,/ForestTiger-GH/stratbox/branches,/branches,6,1
+2026-11-17,2026-11-18T09:27:52Z,/ForestTiger-GH/stratbox/pulls,/pulls,9,1
+2026-11-17,2026-11-18T09:27:52Z,/ForestTiger-GH/stratbox/tree/main,/tree/main,11,1
+2026-11-17,2026-11-18T09:27:52Z,/ForestTiger-GH/stratbox/tree/main/src/stratbox,/tree/main/src/stratbox,41,1
+2026-11-17,2026-11-18T09:27:52Z,/ForestTiger-GH/stratbox/tree/main/src/stratbox/core,/tree/main/src/stratbox/core,4,1
+2026-11-17,2026-11-18T09:27:52Z,/ForestTiger-GH/stratbox/tree/main/src/stratbox/macrobanks,/tree/main/src/stratbox/macrobanks,7,1
+2026-11-17,2026-11-18T09:27:52Z,/ForestTiger-GH/stratbox/tree/main/src/stratbox/shared,/tree/main/src/stratbox/shared,7,1
+2026-11-17,2026-11-18T09:27:52Z,/ForestTiger-GH/stratbox/tree/main/src/stratbox/system,/tree/main/src/stratbox/system,8,1
