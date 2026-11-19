@@ -1,0 +1,2 @@
+data_date_utc,observed_at,repository_id,name,full_name,description,visibility,archived,fork,created_at,updated_at,pushed_at,size_kb,files,files_status,commits,stars,forks,subscribers
+2026-11-18,2026-11-19T09:38:56Z,1463067557,vault,ForestTiger-GH/vault,,private,false,false,2026-11-18T16:41:13Z,2026-11-18T16:51:30Z,2026-11-18T19:00:04Z,353,25,exact,14,0,0,0
