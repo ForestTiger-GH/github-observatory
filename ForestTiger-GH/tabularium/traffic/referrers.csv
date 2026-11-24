@@ -171,3 +171,6 @@ data_date_utc,observed_at,referrer,count,uniques
 2026-11-22,2026-11-23T09:58:48Z,Bing,2,2
 2026-11-22,2026-11-23T09:58:48Z,github.com,75,4
 2026-11-22,2026-11-23T09:58:48Z,perplexity.ai,1,1
+2026-11-23,2026-11-24T11:47:33Z,Bing,2,2
+2026-11-23,2026-11-24T11:47:33Z,github.com,53,4
+2026-11-23,2026-11-24T11:47:33Z,perplexity.ai,1,1

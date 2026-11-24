@@ -332,3 +332,13 @@ data_date_utc,observed_at,path,title,count,uniques
 2026-11-22,2026-11-23T09:58:48Z,/ForestTiger-GH/stratbox/tree/main/src/stratbox/domains/minfin,/tree/main/src/stratbox/domains/minfin,26,1
 2026-11-22,2026-11-23T09:58:48Z,/ForestTiger-GH/stratbox/tree/main/src/stratbox/domains/minfin/operations,/tree/main/src/stratbox/domains/minfin/operations,9,1
 2026-11-22,2026-11-23T09:58:48Z,/ForestTiger-GH/stratbox/tree/main/src/stratbox/shared,/tree/main/src/stratbox/shared,9,1
+2026-11-23,2026-11-24T11:47:33Z,/ForestTiger-GH/stratbox,Overview,33,2
+2026-11-23,2026-11-24T11:47:33Z,/ForestTiger-GH/stratbox/pulls,/pulls,9,1
+2026-11-23,2026-11-24T11:47:33Z,/ForestTiger-GH/stratbox/tree/main,/tree/main,35,2
+2026-11-23,2026-11-24T11:47:33Z,/ForestTiger-GH/stratbox/tree/main/src/stratbox,/tree/main/src/stratbox,76,1
+2026-11-23,2026-11-24T11:47:33Z,/ForestTiger-GH/stratbox/tree/main/src/stratbox/domains,/tree/main/src/stratbox/domains,40,1
+2026-11-23,2026-11-24T11:47:33Z,/ForestTiger-GH/stratbox/tree/main/src/stratbox/domains/cbr,/tree/main/src/stratbox/domains/cbr,20,1
+2026-11-23,2026-11-24T11:47:33Z,/ForestTiger-GH/stratbox/tree/main/src/stratbox/domains/fns,/tree/main/src/stratbox/domains/fns,10,1
+2026-11-23,2026-11-24T11:47:33Z,/ForestTiger-GH/stratbox/tree/main/src/stratbox/domains/minfin,/tree/main/src/stratbox/domains/minfin,26,1
+2026-11-23,2026-11-24T11:47:33Z,/ForestTiger-GH/stratbox/tree/main/src/stratbox/registry,/tree/main/src/stratbox/registry,12,1
+2026-11-23,2026-11-24T11:47:33Z,/ForestTiger-GH/stratbox/tree/main/src/stratbox/shared,/tree/main/src/stratbox/shared,10,1
