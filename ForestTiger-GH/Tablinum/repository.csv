@@ -7,3 +7,4 @@ data_date_utc,observed_at,repository_id,name,full_name,description,visibility,ar
 2026-11-23,2026-11-24T11:47:33Z,1463067557,vault,ForestTiger-GH/vault,,private,false,false,2026-11-18T16:41:13Z,2026-11-18T16:51:30Z,2026-11-22T12:59:26Z,403,42,exact,23,0,0,0
 2026-11-24,2026-11-25T10:41:07Z,1463067557,vault,ForestTiger-GH/vault,,private,false,false,2026-11-18T16:41:13Z,2026-11-18T16:51:30Z,2026-11-22T12:59:26Z,403,42,exact,23,0,0,0
 2026-11-25,2026-11-26T10:12:00Z,1463067557,vault,ForestTiger-GH/vault,,private,false,false,2026-11-18T16:41:13Z,2026-11-18T16:51:30Z,2026-11-22T12:59:26Z,403,42,exact,23,0,0,0
+2026-11-26,2026-11-27T10:17:35Z,1463067557,Tablinum,ForestTiger-GH/Tablinum,,private,false,false,2026-11-18T16:41:13Z,2026-11-26T18:32:00Z,2026-11-27T00:40:46Z,570,89,exact,40,0,0,0
